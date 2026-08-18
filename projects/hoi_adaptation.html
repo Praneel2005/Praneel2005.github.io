@@ -134,7 +134,7 @@
         <strong>Abstract:</strong> Synthesizing semantic-aware, long-horizon, human-object interaction is critical to simulate realistic human behaviors. However, most existing research on HOI synthesis lacks comprehensive whole-body interactions with dynamic objects, often being limited to manipulating small or static objects. In this work, we address the challenging problem of generating synchronized character motion and object manipulation for custom 3D assets that fall outside standard training distributions. We propose a "Geometric Domain Adaptation" pipeline that integrates novel assets into the CHOIS (Controllable Human-Object Interaction Synthesis) framework.
       </p>
 
-      <img src="../images/project.png" class="project-image" alt="HOI Implementation Workflow" style="max-height: 350px; object-fit: contain; background: #eee; padding: 10px;" />
+      <img src="../images/HOI_ARCHI_image.png" class="project-image" alt="HOI Implementation Workflow" />
       <p class="image-caption"><strong>Figure 1: Geometric Adaptation Workflow.</strong> From raw custom 3D assets to coordinate-aligned, SDF-represented, and BPS-encoded physics-compliant representations used during sampling inference.</p>
 
       <h2 class="section-title">Key Methodologies</h2>
@@ -197,6 +197,31 @@
           </tbody>
         </table>
       </div>
+
+      <h2 class="section-title">Qualitative Motion Results</h2>
+      <p align="justify">
+        Below are dynamic motion sequences generated using our physics-guided Geometric Domain Adaptation framework. The models succeed in grasping the custom weaponry with zero penetration and realistic hand alignment.
+      </p>
+      
+      <div class="grid-container">
+        <div>
+          <h3 style="text-align: center; font-size: 16px;">Human-Sword Interaction</h3>
+          <video width="100%" height="auto" controls loop muted autoplay style="border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
+            <source src="../videos/sword_interaction.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p class="image-caption" style="margin-top: 10px;">Zero-collision grasp reconstruction of a character wielding a custom Indian Sword asset.</p>
+        </div>
+        <div>
+          <h3 style="text-align: center; font-size: 16px;">Human-Spear Interaction</h3>
+          <video width="100%" height="auto" controls loop muted autoplay style="border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
+            <source src="../videos/spear_interaction.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p class="image-caption" style="margin-top: 10px;">Physically-plausible interaction with a variable-length spear asset without floor penetration.</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </body>
