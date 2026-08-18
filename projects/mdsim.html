@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MDSim - Praneel Nadgir</title>
+  <link rel="icon" href="../images/favicon_io/N.jpeg" type="image/x-icon">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="../styles.css">
+
+  <style>
+    body {
+      display: block;
+      padding: 0;
+      margin: 0;
+      background-color: #ffffff;
+      height: auto;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    .back-link {
+      margin-bottom: 20px;
+      display: inline-block;
+      font-weight: bold;
+      transition: color 0.2s ease;
+    }
+    .project-image {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin: 20px 0 10px 0;
+      transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    .project-image:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+    .image-caption {
+      font-size: 13px;
+      color: #666;
+      text-align: center;
+      margin: 0 0 30px 0;
+      line-height: 1.5;
+      padding: 0 20px;
+      font-style: italic;
+    }
+    .paper-info {
+      padding: 20px;
+      border-left: 4px solid #1772d0;
+      background: #f7faff;
+      border-radius: 0 8px 8px 0;
+      margin: 25px 0;
+      line-height: 1.6;
+    }
+    h1 { font-size: 34px; margin-bottom: 10px; font-weight: 700; color: #222; }
+    h2 { font-size: 22px; font-weight: 700; color: #333; }
+    .tagline { font-style: italic; color: #666; font-size: 18px; margin-bottom: 30px; }
+    .section-title { border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 45px; margin-bottom: 20px; }
+    
+    .grid-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .asymmetric-block {
+      background: #fafafa;
+      border: 1px dashed #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 25px 0;
+    }
+
+    @media (max-width: 768px) {
+      .grid-container {
+        grid-template-columns: 1fr;
+      }
+      h1 { font-size: 28px; }
+      .container { padding: 15px; margin: 20px auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../index.html" class="back-link">← Back to Portfolio</a>
+    
+    <h1>MDSim: Neural Multi-Layer Draped Garment Simulation with Differentiable Friction</h1>
+    <p class="tagline">Neural Simulation framework modeling inter-garment friction for multi-layer unpinned attire.</p>
+
+    <div class="paper-info">
+      <strong>Under Review:</strong> 2026<br>
+      <strong>Focus:</strong> 3D Vision, GNN Physics-guided Simulation, Differentiable Tangential Friction<br>
+      <strong>Links:</strong> <a href="../data/MDSim.pdf" target="_blank">PDF Paper</a>
+    </div>
+
+    <div class="content">
+      <p align="justify">
+        <strong>Abstract:</strong> In this work, we propose MDSim, a differentiable inter-garment friction framework for neural simulation of multi-layer draped garments. Draped attire (e.g., dupattas, sarees) has no closed geometric anchor and stays on the body through friction against the layer beneath it alone, yet existing learned cloth simulators primarily model repulsive normal contact, leaving such a layer with nothing resisting tangential motion and free to slide off. To address this, MDSim learns physical tangential friction during self-supervised training via a differentiable friction loss that penalizes tangential slip relative to normal force, scaled by a learned, material-conditioned friction predictor pretrained on published textile friction measurements.
+      </p>
+
+      <img src="../images/project.png" class="project-image" alt="MDSim Architecture" style="max-height: 350px; object-fit: contain; background: #eee; padding: 10px;" />
+      <p class="image-caption"><strong>Figure 1: MDSim Pipeline.</strong> Active contacts are detected between multi-layer garment surfaces. The learned material-conditioned MLP predictor estimates the per-contact friction coefficient using fabric properties, normal forces, and speed to supervise GNN dynamics.</p>
+
+      <h2 class="section-title">Core Contributions</h2>
+      <ul>
+        <li>
+          <strong>Inter-Garment Friction Loss</strong>: An inter-garment friction loss for neural cloth simulation, trained end-to-end rather than applied as a post-processing physics correction step.
+        </li>
+        <li>
+          <strong>Learned Friction Coefficient</strong>: A learned, per-contact friction coefficient conditioned on fabric properties and pretrained on measured textile data, replacing manually tuned constants.
+        </li>
+        <li>
+          <strong>Multi-Layer Drape Retention</strong>: Enables the first stable neural simulation of unpinned, multi-layer draped garments (e.g., dupattas, sarees), preventing them from sliding off.
+        </li>
+        <li>
+          <strong>Instability Isolation</strong>: Pinpoints and isolates a two-garment coupling instability in GNN solvers driven by large-area contact forces.
+        </li>
+      </ul>
+
+      <div class="asymmetric-block">
+        <h3>💡 Physics-Guided GNN Loss Formulation</h3>
+        <p align="justify" style="font-size: 13px; line-height: 1.5; margin: 0;">
+          The framework calculates tangential slip $\mathbf{s} = \Delta \mathbf{r} - (\Delta \mathbf{r} \cdot \hat{\mathbf{n}})\hat{\mathbf{n}}$ at contact points and penalizes it using a pseudo-Huber function scaled by normal force and the dynamically predicted friction coefficient. This forces the simulator to maintain stick-slip behaviors naturally without solving expensive equations at runtime.
+        </p>
+      </div>
+
+      <h2 class="section-title">Qualitative Evaluation</h2>
+      <p align="justify">
+        We evaluate the system on a multi-layer outfit composed of an inner kurta (5,106 vertices) and an outer unpinned dupatta (4,958 vertices) draped over an SMPL body.
+        Vanilla simulators (like ContourCraft) fail to retain the dupatta, leading to severe sliding and separation within the first second. MDSim stabilizes the GNN dynamics and successfully maintains the drape over the shoulder across a range of dynamic motions.
+      </p>
+    </div>
+  </div>
+</body>
+</html>

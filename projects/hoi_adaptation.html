@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HOI Adaptation - Praneel Nadgir</title>
+  <link rel="icon" href="../images/favicon_io/N.jpeg" type="image/x-icon">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="../styles.css">
+
+  <style>
+    body {
+      display: block;
+      padding: 0;
+      margin: 0;
+      background-color: #ffffff;
+      height: auto;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    .back-link {
+      margin-bottom: 20px;
+      display: inline-block;
+      font-weight: bold;
+      transition: color 0.2s ease;
+    }
+    .project-image {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin: 20px 0 10px 0;
+      transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    .project-image:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
+    .image-caption {
+      font-size: 13px;
+      color: #666;
+      text-align: center;
+      margin: 0 0 30px 0;
+      line-height: 1.5;
+      padding: 0 20px;
+      font-style: italic;
+    }
+    .paper-info {
+      padding: 20px;
+      border-left: 4px solid #1772d0;
+      background: #f7faff;
+      border-radius: 0 8px 8px 0;
+      margin: 25px 0;
+      line-height: 1.6;
+    }
+    h1 { font-size: 34px; margin-bottom: 10px; font-weight: 700; color: #222; }
+    h2 { font-size: 22px; font-weight: 700; color: #333; }
+    .tagline { font-style: italic; color: #666; font-size: 18px; margin-bottom: 30px; }
+    .section-title { border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 45px; margin-bottom: 20px; }
+    
+    .grid-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .metrics-table-wrapper {
+      overflow-x: auto;
+      margin: 25px 0;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      border: 1px solid #eee;
+    }
+    
+    .metrics-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+    }
+    
+    .metrics-table th {
+      background: #1772d0;
+      color: #ffffff;
+      padding: 12px 14px;
+      font-weight: 700;
+    }
+    
+    .metrics-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #eeeeee;
+      color: #444;
+    }
+    
+    .metrics-table tr:nth-of-type(even) {
+      background-color: #f8f9fa;
+    }
+
+    .asymmetric-block {
+      background: #fafafa;
+      border: 1px dashed #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 25px 0;
+    }
+
+    @media (max-width: 768px) {
+      .grid-container {
+        grid-template-columns: 1fr;
+      }
+      h1 { font-size: 28px; }
+      .container { padding: 15px; margin: 20px auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="../index.html" class="back-link">← Back to Portfolio</a>
+    
+    <h1>Character Motion Generation Towards Human-Object Interaction</h1>
+    <p class="tagline">Geometric Domain Adaptation pipeline for physics-guided zero-shot grasping of out-of-distribution 3D assets.</p>
+
+    <div class="paper-info">
+      <strong>Institutional Mini Project:</strong> KLE Technological University, 2025-2026<br>
+      <strong>Authors:</strong> Praneel Nadgir, Yashas A B, Rashmi Adiveppa Khot (Guided by Prof. Uma Mudenagudi)<br>
+      <strong>Focus:</strong> 3D Motion Synthesis, CHOIS, Signed Distance Fields (SDF), Basis Point Sets (BPS)<br>
+      <strong>Links:</strong> <a href="../data/HOI_Mini_Project_Report.pdf" target="_blank">PDF Mini-Project Report</a>
+    </div>
+
+    <div class="content">
+      <p align="justify">
+        <strong>Abstract:</strong> Synthesizing semantic-aware, long-horizon, human-object interaction is critical to simulate realistic human behaviors. However, most existing research on HOI synthesis lacks comprehensive whole-body interactions with dynamic objects, often being limited to manipulating small or static objects. In this work, we address the challenging problem of generating synchronized character motion and object manipulation for custom 3D assets that fall outside standard training distributions. We propose a "Geometric Domain Adaptation" pipeline that integrates novel assets into the CHOIS (Controllable Human-Object Interaction Synthesis) framework.
+      </p>
+
+      <img src="../images/project.png" class="project-image" alt="HOI Implementation Workflow" style="max-height: 350px; object-fit: contain; background: #eee; padding: 10px;" />
+      <p class="image-caption"><strong>Figure 1: Geometric Adaptation Workflow.</strong> From raw custom 3D assets to coordinate-aligned, SDF-represented, and BPS-encoded physics-compliant representations used during sampling inference.</p>
+
+      <h2 class="section-title">Key Methodologies</h2>
+      <ul>
+        <li>
+          <strong>Topological Proxy Strategy</strong>: Aligns the semantic geometric features of a custom out-of-distribution asset (e.g. an Indian Sword) with a canonical class in the model's training distribution (e.g. a vertical clothes stand).
+        </li>
+        <li>
+          <strong>High-Resolution SDF Re-calibration</strong>: Increases the default Signed Distance Field resolution from $64^3$ to $256^3$ to prevent "geometric aliasing" where thin handles or blades fall between grid points.
+        </li>
+        <li>
+          <strong>Basis Point Sets (BPS) Encoding</strong>: Samples 1024 points across the asset surface to calculate Euclidean distances from a fixed 3D grid, forming a unique "geometric fingerprint" that informs the model of the object shape.
+        </li>
+        <li>
+          <strong>Contact Guidance Tuning</strong>: Employs a physics-guided loss term ($F_{contact}$) to backpropagate hand-to-surface gradients, effectively "pulling" the character's hand onto the hilt.
+        </li>
+      </ul>
+
+      <div class="asymmetric-block">
+        <h3>💡 Resolving the "Ghost Grasp" Artifact</h3>
+        <p align="justify" style="font-size: 13px; line-height: 1.5; margin: 0;">
+          A common failure mode in naive substitution is the "Ghost Grasp", where the character's hand closes around empty air because it expects a wider object (like a chair). By dynamically updating the SDF and BPS caches, our adaptation layer forces the Langevin diffusion sampler to converge the hand trajectory tightly onto the thin hilt of the custom sword.
+        </p>
+      </div>
+
+      <h2 class="section-title">Quantitative Performance</h2>
+      <p align="justify">
+        We validate our framework on out-of-distribution assets (Sword and Spear) against standard baseline diffusion models:
+      </p>
+
+      <div class="metrics-table-wrapper">
+        <table class="metrics-table">
+          <thead>
+            <tr>
+              <th>Evaluation Metric</th>
+              <th>Baseline (Standard Diffusion)</th>
+              <th>Our Proposed Framework</th>
+              <th>Improvement (cm)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Hand Penetration ($P_{hand}$) $\downarrow$</strong></td>
+              <td>3.89 cm</td>
+              <td><strong>0.15 cm</strong></td>
+              <td>-3.74 cm (Zero-collision contact)</td>
+            </tr>
+            <tr>
+              <td><strong>Condition Matching ($T_{xy}$) $\downarrow$</strong></td>
+              <td>40.55 cm</td>
+              <td><strong>7.35 cm</strong></td>
+              <td>-33.20 cm (Accurate waypoints)</td>
+            </tr>
+            <tr>
+              <td><strong>Foot Floating ($H_{feet}$) $\downarrow$</strong></td>
+              <td>6.32 cm</td>
+              <td><strong>2.92 cm</strong></td>
+              <td>-3.40 cm (Realistic ground contact)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
