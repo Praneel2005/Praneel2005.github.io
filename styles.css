@@ -233,7 +233,7 @@ input:checked + label + .background {
   overflow: hidden;
   border-radius: 12px;
   border: 1px solid #eee;
-  background-color: #fafafa;
+  background-color: #ffffff;
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
