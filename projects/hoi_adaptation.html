@@ -1,144 +1,195 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HOI Adaptation - Praneel Nadgir</title>
+  <title>HOI Adaptation | Praneel Nadgir</title>
   <link rel="icon" href="../images/favicon_io/N.jpeg" type="image/x-icon">
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="../styles.css">
 
   <style>
-    body {
-      display: block;
-      padding: 0;
-      margin: 0;
-      background-color: #ffffff;
-      height: auto;
+    .project-container {
+      max-width: 880px;
+      margin: 0 auto;
     }
-    .container {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 20px;
+    
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 28px;
+      padding: 8px 16px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: var(--shadow-subtle);
+      transition: all var(--duration-fast) var(--ease-out);
     }
-    .back-link {
-      margin-bottom: 20px;
-      display: inline-block;
-      font-weight: bold;
-      transition: color 0.2s ease;
+    
+    @media (hover: hover) and (pointer: fine) {
+      .back-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-card);
+        color: var(--accent-blue);
+      }
     }
-    .project-image {
+    
+    .back-btn:active {
+      transform: scale(0.96);
+    }
+
+    .project-header-title {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .project-tagline {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      line-height: 1.45;
+    }
+
+    .paper-info-box {
+      padding: 22px 26px;
+      border-left: 4px solid var(--accent-blue);
+      background: var(--bg-surface);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      border-top: 1px solid var(--border-light);
+      border-right: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+      box-shadow: var(--shadow-card);
+      margin: 24px 0 32px 0;
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .project-media {
       width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      margin: 20px 0 10px 0;
-      transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--border-light);
+      margin: 24px 0 10px 0;
+      background: #ffffff;
+      transition: transform var(--duration-normal) var(--ease-apple), box-shadow var(--duration-normal) var(--ease-apple);
     }
-    .project-image:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+
+    @media (hover: hover) and (pointer: fine) {
+      .project-media:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-elevated);
+      }
     }
-    .image-caption {
-      font-size: 13px;
-      color: #666;
+
+    .media-caption {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
       text-align: center;
-      margin: 0 0 30px 0;
+      margin: 0 0 32px 0;
       line-height: 1.5;
       padding: 0 20px;
-      font-style: italic;
     }
-    .paper-info {
+
+    .section-heading {
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 10px;
+      margin-top: 40px;
+      margin-bottom: 18px;
+    }
+
+    .callout-box {
+      background: rgba(0, 113, 227, 0.04);
+      border: 1px solid rgba(0, 113, 227, 0.15);
+      border-radius: var(--radius-md);
       padding: 20px;
-      border-left: 4px solid #1772d0;
-      background: #f7faff;
-      border-radius: 0 8px 8px 0;
-      margin: 25px 0;
-      line-height: 1.6;
+      margin: 24px 0;
     }
-    h1 { font-size: 34px; margin-bottom: 10px; font-weight: 700; color: #222; }
-    h2 { font-size: 22px; font-weight: 700; color: #333; }
-    .tagline { font-style: italic; color: #666; font-size: 18px; margin-bottom: 30px; }
-    .section-title { border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 45px; margin-bottom: 20px; }
-    
-    .grid-container {
+
+    /* Apple-style Table */
+    .apple-table-card {
+      background: var(--bg-surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      margin: 24px 0 32px 0;
+    }
+
+    .apple-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      text-align: left;
+    }
+
+    .apple-table th {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      padding: 14px 18px;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .apple-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-secondary);
+    }
+
+    .apple-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .apple-table tr.highlight-row td {
+      background: rgba(0, 113, 227, 0.04);
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .video-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
-      margin: 20px 0;
-    }
-
-    .metrics-table-wrapper {
-      overflow-x: auto;
-      margin: 25px 0;
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      border: 1px solid #eee;
-    }
-    
-    .metrics-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-      text-align: left;
-    }
-    
-    .metrics-table th {
-      background: #1772d0;
-      color: #ffffff;
-      padding: 12px 14px;
-      font-weight: 700;
-    }
-    
-    .metrics-table td {
-      padding: 10px 14px;
-      border-bottom: 1px solid #eeeeee;
-      color: #444;
-    }
-    
-    .metrics-table tr:nth-of-type(even) {
-      background-color: #f8f9fa;
-    }
-
-    .asymmetric-block {
-      background: #fafafa;
-      border: 1px dashed #ccc;
-      border-radius: 8px;
-      padding: 20px;
-      margin: 25px 0;
+      margin: 24px 0;
     }
 
     @media (max-width: 768px) {
-      .grid-container {
+      .video-grid {
         grid-template-columns: 1fr;
       }
-      h1 { font-size: 28px; }
-      .container { padding: 15px; margin: 20px auto; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <a href="../index.html" class="back-link">← Back to Portfolio</a>
+  <div class="project-container">
+    <a href="../index.html" class="back-btn">&larr; Back to Portfolio</a>
     
-    <h1>Character Motion Generation Towards Human-Object Interaction</h1>
-    <p class="tagline">Geometric Domain Adaptation pipeline for physics-guided zero-shot grasping of out-of-distribution 3D assets.</p>
+    <h1 class="project-header-title">Character Motion Generation Towards Human-Object Interaction</h1>
+    <p class="project-tagline">Geometric Domain Adaptation pipeline for physics-guided zero-shot grasping of out-of-distribution 3D assets.</p>
 
-    <div class="paper-info">
+    <div class="paper-info-box">
       <strong>Institutional Mini Project:</strong> KLE Technological University, 2025-2026<br>
       <strong>Authors:</strong> Praneel Nadgir, Yashas A B, Rashmi Adiveppa Khot (Guided by Prof. Uma Mudenagudi)<br>
       <strong>Focus:</strong> 3D Motion Synthesis, CHOIS, Signed Distance Fields (SDF), Basis Point Sets (BPS)<br>
-      <strong>Links:</strong> <a href="../data/HOI_Mini_Project_Report.pdf" target="_blank">PDF Mini-Project Report</a>
+      <strong>Links:</strong> <a href="../data/HOI_Mini_Project_Report.pdf" target="_blank" class="pub-link-btn" style="margin-top: 6px;">&darr; PDF Mini-Project Report</a>
     </div>
 
-    <div class="content">
-      <p align="justify">
+    <div class="content-body">
+      <p class="justify">
         <strong>Abstract:</strong> Synthesizing semantic-aware, long-horizon, human-object interaction is critical to simulate realistic human behaviors. However, most existing research on HOI synthesis lacks comprehensive whole-body interactions with dynamic objects, often being limited to manipulating small or static objects. In this work, we address the challenging problem of generating synchronized character motion and object manipulation for custom 3D assets that fall outside standard training distributions. We propose a "Geometric Domain Adaptation" pipeline that integrates novel assets into the CHOIS (Controllable Human-Object Interaction Synthesis) framework.
       </p>
 
-      <img src="../images/HOI_ARCHI_image.png" class="project-image" alt="HOI Implementation Workflow" />
-      <p class="image-caption"><strong>Figure 1: Geometric Adaptation Workflow.</strong> From raw custom 3D assets to coordinate-aligned, SDF-represented, and BPS-encoded physics-compliant representations used during sampling inference.</p>
+      <img src="../images/HOI_ARCHI_image.png" class="project-media" alt="HOI Implementation Workflow" />
+      <p class="media-caption"><strong>Figure 1: Geometric Adaptation Workflow.</strong> From raw custom 3D assets to coordinate-aligned, SDF-represented, and BPS-encoded physics-compliant representations used during sampling inference.</p>
 
-      <h2 class="section-title">Key Methodologies</h2>
-      <ul>
+      <h2 class="section-heading">Key Methodologies</h2>
+      <ul style="margin-left: 20px; line-height: 1.8;">
         <li>
           <strong>Topological Proxy Strategy</strong>: Aligns the semantic geometric features of a custom out-of-distribution asset (e.g. an Indian Sword) with a canonical class in the model's training distribution (e.g. a vertical clothes stand).
         </li>
@@ -153,43 +204,43 @@
         </li>
       </ul>
 
-      <div class="asymmetric-block">
-        <h3>💡 Resolving the "Ghost Grasp" Artifact</h3>
-        <p align="justify" style="font-size: 13px; line-height: 1.5; margin: 0;">
+      <div class="callout-box">
+        <h3 style="color: var(--accent-blue);">💡 Resolving the "Ghost Grasp" Artifact</h3>
+        <p style="font-size: 0.95rem; margin: 0; line-height: 1.6;">
           A common failure mode in naive substitution is the "Ghost Grasp", where the character's hand closes around empty air because it expects a wider object (like a chair). By dynamically updating the SDF and BPS caches, our adaptation layer forces the Langevin diffusion sampler to converge the hand trajectory tightly onto the thin hilt of the custom sword.
         </p>
       </div>
 
-      <h2 class="section-title">Quantitative Performance</h2>
-      <p align="justify">
+      <h2 class="section-heading">Quantitative Performance</h2>
+      <p class="justify">
         We validate our framework on out-of-distribution assets (Sword and Spear) against standard baseline diffusion models:
       </p>
 
-      <div class="metrics-table-wrapper">
-        <table class="metrics-table">
+      <div class="apple-table-card">
+        <table class="apple-table">
           <thead>
             <tr>
               <th>Evaluation Metric</th>
               <th>Baseline (Standard Diffusion)</th>
               <th>Our Proposed Framework</th>
-              <th>Improvement (cm)</th>
+              <th>Improvement</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><strong>Hand Penetration ($P_{hand}$) $\downarrow$</strong></td>
+            <tr class="highlight-row">
+              <td><strong>Hand Penetration ($P_{hand}$) &darr;</strong></td>
               <td>3.89 cm</td>
               <td><strong>0.15 cm</strong></td>
               <td>-3.74 cm (Zero-collision contact)</td>
             </tr>
             <tr>
-              <td><strong>Condition Matching ($T_{xy}$) $\downarrow$</strong></td>
+              <td><strong>Condition Matching ($T_{xy}$) &darr;</strong></td>
               <td>40.55 cm</td>
               <td><strong>7.35 cm</strong></td>
               <td>-33.20 cm (Accurate waypoints)</td>
             </tr>
             <tr>
-              <td><strong>Foot Floating ($H_{feet}$) $\downarrow$</strong></td>
+              <td><strong>Foot Floating ($H_{feet}$) &darr;</strong></td>
               <td>6.32 cm</td>
               <td><strong>2.92 cm</strong></td>
               <td>-3.40 cm (Realistic ground contact)</td>
@@ -198,27 +249,28 @@
         </table>
       </div>
 
-      <h2 class="section-title">Qualitative Motion Results</h2>
-      <p align="justify">
+      <h2 class="section-heading">Qualitative Motion Results</h2>
+      <p class="justify">
         Below are dynamic motion sequences generated using our physics-guided Geometric Domain Adaptation framework. The models succeed in grasping the custom weaponry with zero penetration and realistic hand alignment.
       </p>
       
-      <div class="grid-container">
-        <div>
-          <h3 style="text-align: center; font-size: 16px;">Human-Sword Interaction</h3>
-          <video width="100%" height="auto" controls loop muted autoplay style="border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
+      <div class="video-grid">
+        <div class="content-card" style="padding: 16px;">
+          <h3 style="text-align: center; margin-bottom: 12px;">Human-Sword Interaction</h3>
+          <video width="100%" height="auto" controls loop muted autoplay style="border-radius: var(--radius-md); box-shadow: var(--shadow-subtle);">
             <source src="../videos/sword_interaction.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video>
-          <p class="image-caption" style="margin-top: 10px;">Zero-collision grasp reconstruction of a character wielding a custom Indian Sword asset.</p>
+          <p class="media-caption" style="margin: 12px 0 0 0;">Zero-collision grasp reconstruction of a character wielding a custom Indian Sword asset.</p>
         </div>
-        <div>
-          <h3 style="text-align: center; font-size: 16px;">Human-Spear Interaction</h3>
-          <video width="100%" height="auto" controls loop muted autoplay style="border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
+        
+        <div class="content-card" style="padding: 16px;">
+          <h3 style="text-align: center; margin-bottom: 12px;">Human-Spear Interaction</h3>
+          <video width="100%" height="auto" controls loop muted autoplay style="border-radius: var(--radius-md); box-shadow: var(--shadow-subtle);">
             <source src="../videos/spear_interaction.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video>
-          <p class="image-caption" style="margin-top: 10px;">Physically-plausible interaction with a variable-length spear asset without floor penetration.</p>
+          <p class="media-caption" style="margin: 12px 0 0 0;">Physically-plausible interaction with a variable-length spear asset without floor penetration.</p>
         </div>
       </div>
 

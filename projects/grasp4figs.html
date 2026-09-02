@@ -1,131 +1,160 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GRASP4Figs - Praneel Nadgir</title>
+  <title>GRASP4Figs | Praneel Nadgir</title>
   <link rel="icon" href="../images/favicon_io/N.jpeg" type="image/x-icon">
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="../styles.css">
 
   <style>
-    body {
-      display: block;
-      padding: 0;
-      margin: 0;
-      background-color: #ffffff;
-      height: auto;
+    .project-container {
+      max-width: 880px;
+      margin: 0 auto;
     }
-    .container {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 20px;
+    
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 28px;
+      padding: 8px 16px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: var(--shadow-subtle);
+      transition: all var(--duration-fast) var(--ease-out);
     }
-    .back-link {
-      margin-bottom: 20px;
-      display: inline-block;
-      font-weight: bold;
-      transition: color 0.2s ease;
+    
+    @media (hover: hover) and (pointer: fine) {
+      .back-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-card);
+        color: var(--accent-blue);
+      }
     }
-    .project-image {
+    
+    .back-btn:active {
+      transform: scale(0.96);
+    }
+
+    .project-header-title {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .project-tagline {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      line-height: 1.45;
+    }
+
+    .paper-info-box {
+      padding: 22px 26px;
+      border-left: 4px solid var(--accent-blue);
+      background: var(--bg-surface);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      border-top: 1px solid var(--border-light);
+      border-right: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+      box-shadow: var(--shadow-card);
+      margin: 24px 0 32px 0;
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .project-media {
       width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      margin: 20px 0 10px 0;
-      transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--border-light);
+      margin: 24px 0 10px 0;
+      background: #ffffff;
+      transition: transform var(--duration-normal) var(--ease-apple), box-shadow var(--duration-normal) var(--ease-apple);
     }
-    .project-image:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+
+    @media (hover: hover) and (pointer: fine) {
+      .project-media:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-elevated);
+      }
     }
-    .image-caption {
-      font-size: 13px;
-      color: #666;
+
+    .media-caption {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
       text-align: center;
-      margin: 0 0 30px 0;
+      margin: 0 0 32px 0;
       line-height: 1.5;
       padding: 0 20px;
-      font-style: italic;
-    }
-    .paper-info {
-      padding: 20px;
-      border-left: 4px solid #1772d0;
-      background: #f7faff;
-      border-radius: 0 8px 8px 0;
-      margin: 25px 0;
-      line-height: 1.6;
-    }
-    h1 { font-size: 34px; margin-bottom: 10px; font-weight: 700; color: #222; }
-    h2 { font-size: 22px; font-weight: 700; color: #333; }
-    .tagline { font-style: italic; color: #666; font-size: 18px; margin-bottom: 30px; }
-    .section-title { border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 45px; margin-bottom: 20px; }
-    
-    .grid-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin: 20px 0;
     }
 
-    .asymmetric-block {
-      background: #fafafa;
-      border: 1px dashed #ccc;
-      border-radius: 8px;
-      padding: 20px;
-      margin: 25px 0;
+    .section-heading {
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 10px;
+      margin-top: 40px;
+      margin-bottom: 18px;
     }
 
-    @media (max-width: 768px) {
-      .grid-container {
-        grid-template-columns: 1fr;
-      }
-      h1 { font-size: 28px; }
-      .container { padding: 15px; margin: 20px auto; }
+    .callout-box {
+      background: rgba(0, 113, 227, 0.04);
+      border: 1px solid rgba(0, 113, 227, 0.15);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin: 24px 0;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <a href="../index.html" class="back-link">← Back to Portfolio</a>
+  <div class="project-container">
+    <a href="../index.html" class="back-btn">&larr; Back to Portfolio</a>
     
-    <h1>GRASP4Figs: OCR-Augmented Reward-Conditioned Captioning for Scientific Figures</h1>
-    <p class="tagline">An OCR-injected and reinforcement learning-steered pipeline for paragraph-length scientific plot descriptions.</p>
+    <h1 class="project-header-title">GRASP4Figs: OCR-Augmented Reward-Conditioned Captioning for Scientific Figures</h1>
+    <p class="project-tagline">An OCR-injected and reinforcement learning-steered pipeline for paragraph-length scientific plot descriptions.</p>
 
-    <div class="paper-info">
+    <div class="paper-info-box">
       <strong>Accepted at:</strong> 17th Indian Conference on Computer Vision, Graphics and Image Processing (ICVGIP 2026)<br>
       <strong>Authors:</strong> Nadgir et al.<br>
       <strong>Focus:</strong> Multimodal Figure Understanding, Vision-Language Models, Reinforcement Learning (RLHF), Qwen2.5-VL<br>
-      <strong>Links:</strong> <a href="../data/Grasp.pdf" target="_blank">PDF Paper</a>
+      <strong>Links:</strong> <a href="../data/Grasp.pdf" target="_blank" class="pub-link-btn" style="margin-top: 6px;">&darr; PDF Paper</a>
     </div>
 
-    <div class="content">
-      <p align="justify">
+    <div class="content-body">
+      <p class="justify">
         <strong>Abstract:</strong> Generating faithful, informative textual descriptions of scientific figures is a formidable challenge in multimodal document understanding. While reward-conditioned frameworks exist, they process figures without access to embedded textual content (axis labels, legend entries) and remain restricted to short captions. To address this, we propose GRASP4Figs to inject OCR-derived context directly into the captioning pipeline and extend generation to paragraph-length analytical descriptions.
       </p>
 
-      <img src="../images/project.png" class="project-image" alt="GRASP4Figs Architecture" style="max-height: 350px; object-fit: contain; background: #eee; padding: 10px;" />
-      <p class="image-caption"><strong>Figure 1: GRASP4Figs Case 1 Core Architecture.</strong> Three input streams—visual embeddings from ViT-Base, OCR context tokens prepended to the prompt, and a UDRL composite reward control token—are fused and processed by a BLIP-Base decoder.</p>
+      <img src="../images/project.png" class="project-media" alt="GRASP4Figs Architecture" style="max-height: 360px; object-fit: contain; padding: 12px;" />
+      <p class="media-caption"><strong>Figure 1: GRASP4Figs Case 1 Core Architecture.</strong> Three input streams—visual embeddings from ViT-Base, OCR context tokens prepended to the prompt, and a UDRL composite reward control token—are fused and processed by a BLIP-Base decoder.</p>
 
-      <h2 class="section-title">Core Methodology</h2>
+      <h2 class="section-heading">Core Methodology</h2>
       
-      <h3>Case 1: OCR-Augmented UDRL-HF (Short Captioning)</h3>
-      <p align="justify">
+      <h3 style="margin-top: 20px;">Case 1: OCR-Augmented UDRL-HF (Short Captioning)</h3>
+      <p class="justify">
         We augment a BLIP vision-language model by prepending tokenized in-figure OCR text (axis labels, numbers, and legends) to the training prompt. To optimize for helpfulness and informative length, we combine human feedback helpfulness scores with a detail-aware length reward in an offline <strong>Upside-Down Reinforcement Learning (UDRL-HF)</strong> framework. This allows the model to capture domain-specific vocabulary and axis quantities directly.
       </p>
 
-      <div class="asymmetric-block">
-        <h3>💡 Mention-Paragraph-Induced Grounding Collapse (MPGC)</h3>
-        <p align="justify" style="font-size: 13px; line-height: 1.5; margin: 0;">
-          A key finding of this work is **MPGC** (Case 2): fine-tuning large models (like Qwen2.5-VL-7B) on mention-paragraphs causes them to hallucinate paper-specific experimental methodologies not visible in the figure itself. We resolve this by bypassing fine-tuning completely, utilizing frozen models guided by a structured zero-shot prompt with strict observation constraints.
+      <div class="callout-box">
+        <h3 style="color: var(--accent-blue);">💡 Mention-Paragraph-Induced Grounding Collapse (MPGC)</h3>
+        <p style="font-size: 0.95rem; margin: 0; line-height: 1.6;">
+          A key finding of this work is <strong>MPGC</strong> (Case 2): fine-tuning large models (like Qwen2.5-VL-7B) on mention-paragraphs causes them to hallucinate paper-specific experimental methodologies not visible in the figure itself. We resolve this by bypassing fine-tuning completely, utilizing frozen models guided by a structured zero-shot prompt with strict observation constraints.
         </p>
       </div>
 
-      <h3>Case 2: Zero-Shot Structured Prompting (Paragraph-Length)</h3>
-      <p align="justify">
-        For long-form description, we guide the frozen Qwen2.5-VL-7B-Instruct using structured prompts that decompose captioning into: (1) figure type identification, (2) axis and variable descriptions, (3) primary trend characterization, and (4) conclusions, under a strict grounding constraint ("Only describe what you can directly observe").
+      <h3 style="margin-top: 20px;">Case 2: Zero-Shot Structured Prompting (Paragraph-Length)</h3>
+      <p class="justify">
+        For long-form description, we guide the frozen Qwen2.5-VL-7B-Instruct using structured prompts that decompose captioning into: (1) figure type identification, (2) axis and variable descriptions, (3) primary trend characterization, and (4) conclusions, under a strict grounding constraint (<em>"Only describe what you can directly observe"</em>).
       </p>
 
-      <h2 class="section-title">Results and Web Application</h2>
-      <ul>
+      <h2 class="section-heading">Results and Web Application</h2>
+      <ul style="margin-left: 20px; line-height: 1.8;">
         <li>
           <strong>Quantitative Gains</strong>: GRASP4Figs achieves a BLEU-4 of 0.0373 (+96.3% over FigCaps-HF baseline) and a ROUGE-L Recall of 0.3782 on 176-word paragraphs.
         </li>

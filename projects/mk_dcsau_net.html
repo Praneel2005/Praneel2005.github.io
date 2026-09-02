@@ -1,144 +1,182 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MK-DCSAU-Net - Praneel Nadgir</title>
+  <title>MK-DCSAU-Net | Praneel Nadgir</title>
   <link rel="icon" href="../images/favicon_io/N.jpeg" type="image/x-icon">
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="../styles.css">
 
   <style>
-    body {
-      display: block;
-      padding: 0;
-      margin: 0;
-      background-color: #ffffff;
-      height: auto;
+    .project-container {
+      max-width: 880px;
+      margin: 0 auto;
     }
-    .container {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 20px;
+    
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 28px;
+      padding: 8px 16px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: var(--shadow-subtle);
+      transition: all var(--duration-fast) var(--ease-out);
     }
-    .back-link {
-      margin-bottom: 20px;
-      display: inline-block;
-      font-weight: bold;
-      transition: color 0.2s ease;
+    
+    @media (hover: hover) and (pointer: fine) {
+      .back-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-card);
+        color: var(--accent-blue);
+      }
     }
-    .project-image {
+    
+    .back-btn:active {
+      transform: scale(0.96);
+    }
+
+    .project-header-title {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .project-tagline {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      line-height: 1.45;
+    }
+
+    .paper-info-box {
+      padding: 22px 26px;
+      border-left: 4px solid var(--accent-blue);
+      background: var(--bg-surface);
+      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+      border-top: 1px solid var(--border-light);
+      border-right: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+      box-shadow: var(--shadow-card);
+      margin: 24px 0 32px 0;
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .project-media {
       width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      margin: 20px 0 10px 0;
-      transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--border-light);
+      margin: 24px 0 10px 0;
+      background: #ffffff;
+      transition: transform var(--duration-normal) var(--ease-apple), box-shadow var(--duration-normal) var(--ease-apple);
     }
-    .project-image:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+
+    @media (hover: hover) and (pointer: fine) {
+      .project-media:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-elevated);
+      }
     }
-    .image-caption {
-      font-size: 13px;
-      color: #666;
+
+    .media-caption {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
       text-align: center;
-      margin: 0 0 30px 0;
+      margin: 0 0 32px 0;
       line-height: 1.5;
       padding: 0 20px;
-      font-style: italic;
-    }
-    .paper-info {
-      padding: 20px;
-      border-left: 4px solid #1772d0;
-      background: #f7faff;
-      border-radius: 0 8px 8px 0;
-      margin: 25px 0;
-      line-height: 1.6;
-    }
-    h1 { font-size: 34px; margin-bottom: 10px; font-weight: 700; color: #222; }
-    h2 { font-size: 22px; font-weight: 700; color: #333; }
-    .tagline { font-style: italic; color: #666; font-size: 18px; margin-bottom: 30px; }
-    .section-title { border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 45px; margin-bottom: 20px; }
-    
-    .grid-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin: 20px 0;
     }
 
-    .metrics-table-wrapper {
-      overflow-x: auto;
-      margin: 25px 0;
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      border: 1px solid #eee;
+    .section-heading {
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 10px;
+      margin-top: 40px;
+      margin-bottom: 18px;
     }
-    
-    .metrics-table {
+
+    .callout-box {
+      background: rgba(0, 113, 227, 0.04);
+      border: 1px solid rgba(0, 113, 227, 0.15);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin: 24px 0;
+    }
+
+    /* Apple-style Table */
+    .apple-table-card {
+      background: var(--bg-surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      margin: 24px 0 32px 0;
+    }
+
+    .apple-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 13px;
+      font-size: 0.95rem;
       text-align: left;
     }
-    
-    .metrics-table th {
-      background: #1772d0;
-      color: #ffffff;
-      padding: 12px 14px;
-      font-weight: 700;
-    }
-    
-    .metrics-table td {
-      padding: 10px 14px;
-      border-bottom: 1px solid #eeeeee;
-      color: #444;
-    }
-    
-    .metrics-table tr:nth-of-type(even) {
-      background-color: #f8f9fa;
+
+    .apple-table th {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      padding: 14px 18px;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-subtle);
     }
 
-    .asymmetric-block {
-      background: #fafafa;
-      border: 1px dashed #ccc;
-      border-radius: 8px;
-      padding: 20px;
-      margin: 25px 0;
+    .apple-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-secondary);
     }
 
-    @media (max-width: 768px) {
-      .grid-container {
-        grid-template-columns: 1fr;
-      }
-      h1 { font-size: 28px; }
-      .container { padding: 15px; margin: 20px auto; }
+    .apple-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .apple-table tr.highlight-row td {
+      background: rgba(0, 113, 227, 0.04);
+      color: var(--text-primary);
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <a href="../index.html" class="back-link">← Back to Portfolio</a>
+  <div class="project-container">
+    <a href="../index.html" class="back-btn">&larr; Back to Portfolio</a>
     
-    <h1>MK-DCSAU-Net: Segmentation-Guided Melanoma Classification via Multi-Kernel Artifact Removal</h1>
-    <p class="tagline">Split-attention deep neural network capturing scale variability and removing artifacts for dermoscopic diagnosis.</p>
+    <h1 class="project-header-title">MK-DCSAU-Net: Segmentation-Guided Melanoma Classification via Multi-Kernel Artifact Removal</h1>
+    <p class="project-tagline">Split-attention deep neural network capturing scale variability and removing artifacts for dermoscopic diagnosis.</p>
 
-    <div class="paper-info">
+    <div class="paper-info-box">
       <strong>Published at:</strong> International Conference on Emerging Technologies and Computer Science (ICETCI 2026 - Springer Nature)<br>
       <strong>Authors:</strong> Sneha Chinchakandi, Yashaswini Mellikeri, Praneel Nadgir, Yashas A B, Sumaiya Pathan<br>
       <strong>Focus:</strong> Medical Image Segmentation, Split-Attention CNNs, Receptive Fields, CAD Systems<br>
-      <strong>Links:</strong> <a href="../data/MK_DCSAU_Net.pdf" target="_blank">PDF Paper</a>
+      <strong>Links:</strong> <a href="../data/MK_DCSAU_Net.pdf" target="_blank" class="pub-link-btn" style="margin-top: 6px;">&darr; PDF Paper</a>
     </div>
 
-    <div class="content">
-      <p align="justify">
+    <div class="content-body">
+      <p class="justify">
         <strong>Abstract:</strong> One of the major dermoscopic melanoma classification problems is background noise; this is represented by hair, rulers, and gel residues, as well as the inability of the model to adapt to lesions of different sizes. To solve this, we suggest using MK-DCSAU-Net (Multi-Kernel Deeper and More Compact Split-Attention U-Net), which owns a Multi-Kernel Primary Feature Conservation (MK-PFC) module. The network is able to extract fine boundary details and global lesion structures by processing images with parallel $3\times3, 7\times7, \text{ and } 11\times11$ kernels.
       </p>
 
-      <img src="../images/project.png" class="project-image" alt="MK-DCSAU-Net Architecture" style="max-height: 350px; object-fit: contain; background: #eee; padding: 10px;" />
-      <p class="image-caption"><strong>Figure 1: MK-DCSAU-Net Pipeline.</strong> Diagram showing the five-level encoder-decoder structure. Standard input convolution is replaced by parallel Multi-Kernel PFC blocks with auxiliary supervised heads in the decoder.</p>
+      <img src="../images/project.png" class="project-media" alt="MK-DCSAU-Net Architecture" style="max-height: 360px; object-fit: contain; padding: 12px;" />
+      <p class="media-caption"><strong>Figure 1: MK-DCSAU-Net Pipeline.</strong> Diagram showing the five-level encoder-decoder structure. Standard input convolution is replaced by parallel Multi-Kernel PFC blocks with auxiliary supervised heads in the decoder.</p>
 
-      <h2 class="section-title">Core Contributions</h2>
-      <ul>
+      <h2 class="section-heading">Core Contributions</h2>
+      <ul style="margin-left: 20px; line-height: 1.8;">
         <li>
           <strong>Multi-Kernel PFC Block</strong>: Directly addresses lesion scale variability by utilizing three parallel depthwise separable convolutions ($3\times3, 7\times7, 11\times11$) to extract multi-scale details.
         </li>
@@ -153,26 +191,26 @@
         </li>
       </ul>
 
-      <div class="asymmetric-block">
-        <h3>💡 High Boundary Fidelity & Gradient Stabilization</h3>
-        <p align="justify" style="font-size: 13px; line-height: 1.5; margin: 0;">
+      <div class="callout-box">
+        <h3 style="color: var(--accent-blue);">💡 High Boundary Fidelity & Gradient Stabilization</h3>
+        <p style="font-size: 0.95rem; margin: 0; line-height: 1.6;">
           Deep supervision is integrated at intermediate decoder levels to stabilize gradient propagation during training on highly heterogeneous and class-imbalanced datasets. Combined with a mixed Dice BCE loss, it drastically improves segmentations on low-contrast lesions.
         </p>
       </div>
 
-      <h2 class="section-title">Quantitative Benchmarks</h2>
-      <p align="justify">
+      <h2 class="section-heading">Quantitative Benchmarks</h2>
+      <p class="justify">
         We evaluate the model on the ISIC 2018 Lesion Boundary Segmentation benchmark (2,594 images) and the Melanoma Detection dataset (10,015 images) validated via 10,000 Monte Carlo partitions:
       </p>
 
-      <div class="metrics-table-wrapper">
-        <table class="metrics-table">
+      <div class="apple-table-card">
+        <table class="apple-table">
           <thead>
             <tr>
               <th>Segmentation Method</th>
               <th>Backbone Type</th>
-              <th>DSC Score $\uparrow$</th>
-              <th>mIoU Score $\uparrow$</th>
+              <th>DSC Score &uarr;</th>
+              <th>mIoU Score &uarr;</th>
             </tr>
           </thead>
           <tbody>
@@ -181,7 +219,7 @@
               <td>CNN</td>
               <td>0.874</td>
               <td>0.802</td>
-              </tr>
+            </tr>
             <tr>
               <td>UNet++</td>
               <td>CNN</td>
