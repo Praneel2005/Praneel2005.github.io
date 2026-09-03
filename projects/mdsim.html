@@ -130,7 +130,7 @@
         <strong>Abstract:</strong> In this work, we propose MDSim, a differentiable inter-garment friction framework for neural simulation of multi-layer draped garments. Draped attire (e.g., dupattas, sarees) has no closed geometric anchor and stays on the body through friction against the layer beneath it alone, yet existing learned cloth simulators primarily model repulsive normal contact, leaving such a layer with nothing resisting tangential motion and free to slide off. To address this, MDSim learns physical tangential friction during self-supervised training via a differentiable friction loss that penalizes tangential slip relative to normal force, scaled by a learned, material-conditioned friction predictor pretrained on published textile friction measurements.
       </p>
 
-      <img src="../images/project.png" class="project-media" alt="MDSim Architecture" style="max-height: 360px; object-fit: contain; padding: 12px;" />
+      <img src="../images/MDSim-result.jpeg" class="project-media" alt="MDSim Architecture" style="max-height: 360px; object-fit: contain; padding: 12px;" />
       <p class="media-caption"><strong>Figure 1: MDSim Pipeline.</strong> Active contacts are detected between multi-layer garment surfaces. The learned material-conditioned MLP predictor estimates the per-contact friction coefficient using fabric properties, normal forces, and speed to supervise GNN dynamics.</p>
 
       <h2 class="section-heading">Core Contributions</h2>
