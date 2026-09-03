@@ -2,209 +2,136 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MK-DCSAU-Net | Praneel Nadgir</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MK-DCSAU-Net — Melanoma Classification &amp; Segmentation | Praneel Nadgir</title>
   <link rel="icon" href="../images/favicon_io/N.jpeg" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
 
-  <style>
-    .project-container {
-      max-width: 880px;
-      margin: 0 auto;
-    }
-    
-    .back-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 28px;
-      padding: 8px 16px;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-full);
-      color: var(--text-primary);
-      font-size: 0.9rem;
-      font-weight: 500;
-      box-shadow: var(--shadow-subtle);
-      transition: all var(--duration-fast) var(--ease-out);
-    }
-    
-    @media (hover: hover) and (pointer: fine) {
-      .back-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-card);
-        color: var(--accent-blue);
+  <!-- MathJax for rendering LaTeX formulas -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: {
+        fontCache: 'global'
       }
-    }
-    
-    .back-btn:active {
-      transform: scale(0.96);
-    }
-
-    .project-header-title {
-      font-size: clamp(2rem, 4vw, 2.8rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.15;
-      margin-bottom: 8px;
-    }
-
-    .project-tagline {
-      font-size: 1.15rem;
-      color: var(--text-secondary);
-      margin-bottom: 24px;
-      line-height: 1.45;
-    }
-
-    .paper-info-box {
-      padding: 22px 26px;
-      border-left: 4px solid var(--accent-blue);
-      background: var(--bg-surface);
-      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-      border-top: 1px solid var(--border-light);
-      border-right: 1px solid var(--border-light);
-      border-bottom: 1px solid var(--border-light);
-      box-shadow: var(--shadow-card);
-      margin: 24px 0 32px 0;
-      line-height: 1.7;
-      font-size: 0.95rem;
-    }
-
-    .project-media {
-      width: 100%;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-card);
-      border: 1px solid var(--border-light);
-      margin: 24px 0 10px 0;
-      background: #ffffff;
-      transition: transform var(--duration-normal) var(--ease-apple), box-shadow var(--duration-normal) var(--ease-apple);
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-      .project-media:hover {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-elevated);
-      }
-    }
-
-    .media-caption {
-      font-size: 0.88rem;
-      color: var(--text-secondary);
-      text-align: center;
-      margin: 0 0 32px 0;
-      line-height: 1.5;
-      padding: 0 20px;
-    }
-
-    .section-heading {
-      border-bottom: 1px solid var(--border-light);
-      padding-bottom: 10px;
-      margin-top: 40px;
-      margin-bottom: 18px;
-    }
-
-    .callout-box {
-      background: rgba(0, 113, 227, 0.04);
-      border: 1px solid rgba(0, 113, 227, 0.15);
-      border-radius: var(--radius-md);
-      padding: 20px;
-      margin: 24px 0;
-    }
-
-    /* Apple-style Table */
-    .apple-table-card {
-      background: var(--bg-surface);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-light);
-      box-shadow: var(--shadow-card);
-      overflow: hidden;
-      margin: 24px 0 32px 0;
-    }
-
-    .apple-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.95rem;
-      text-align: left;
-    }
-
-    .apple-table th {
-      background: var(--bg-secondary);
-      color: var(--text-primary);
-      padding: 14px 18px;
-      font-weight: 600;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .apple-table td {
-      padding: 14px 18px;
-      border-bottom: 1px solid var(--border-light);
-      color: var(--text-secondary);
-    }
-
-    .apple-table tr:last-child td {
-      border-bottom: none;
-    }
-
-    .apple-table tr.highlight-row td {
-      background: rgba(0, 113, 227, 0.04);
-      color: var(--text-primary);
-      font-weight: 600;
-    }
-  </style>
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
 </head>
+
 <body>
-  <div class="project-container">
-    <a href="../index.html" class="back-btn">&larr; Back to Portfolio</a>
-    
-    <h1 class="project-header-title">MK-DCSAU-Net: Segmentation-Guided Melanoma Classification via Multi-Kernel Artifact Removal</h1>
-    <p class="project-tagline">Split-attention deep neural network capturing scale variability and removing artifacts for dermoscopic diagnosis.</p>
 
-    <div class="paper-info-box">
-      <strong>Published at:</strong> International Conference on Emerging Technologies and Computer Science (ICETCI 2026 - Springer Nature)<br>
-      <strong>Authors:</strong> Sneha Chinchakandi, Yashaswini Mellikeri, Praneel Nadgir, Yashas A B, Sumaiya Pathan<br>
-      <strong>Focus:</strong> Medical Image Segmentation, Split-Attention CNNs, Receptive Fields, CAD Systems<br>
-      <strong>Links:</strong> <a href="../data/MK_DCSAU_Net.pdf" target="_blank" class="pub-link-btn" style="margin-top: 6px;">&darr; PDF Paper</a>
-    </div>
+  <div class="project-page-container">
 
-    <div class="content-body">
-      <p class="justify">
-        <strong>Abstract:</strong> One of the major dermoscopic melanoma classification problems is background noise; this is represented by hair, rulers, and gel residues, as well as the inability of the model to adapt to lesions of different sizes. To solve this, we suggest using MK-DCSAU-Net (Multi-Kernel Deeper and More Compact Split-Attention U-Net), which owns a Multi-Kernel Primary Feature Conservation (MK-PFC) module. The network is able to extract fine boundary details and global lesion structures by processing images with parallel $3\times3, 7\times7, \text{ and } 11\times11$ kernels.
+    <!-- Top Navigation Bar -->
+    <header class="top-nav">
+      <a href="../index.html" class="back-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to Portfolio
+      </a>
+      <div class="nav-actions">
+        <a href="../data/MK_DCSAU_Net.pdf" target="_blank" class="nav-pill-btn" title="Download Paper PDF">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Paper PDF
+        </a>
+        <a href="https://github.com/Praneel2005" target="_blank" class="nav-pill-btn" title="GitHub Repository">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          Code
+        </a>
+        <button class="nav-pill-btn" id="themeToggle" title="Toggle Studio Dark / Light Mode">
+          <span id="themeIcon">🌓</span>
+          <span id="themeLabel">Studio Dark</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Header -->
+    <section class="hero-section">
+      <div class="project-pill-badge">
+        <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#0071e3; box-shadow:0 0 8px #0071e3;"></span>
+        Springer Nature • ICETCI 2026 • Medical AI
+      </div>
+      <h1 class="hero-title">MK-DCSAU-Net: <span>Lesion Segmentation</span></h1>
+      <p class="hero-description">
+        Segmentation-guided melanoma classification via multi-kernel primary feature conservation and spatial attention modules to handle extreme lesion scale variability and dermoscopic artifacts.
       </p>
 
-      <img src="../images/MKDCSA.jpg" class="project-media" alt="MK-DCSAU-Net Architecture" style="max-height: 360px; object-fit: contain; padding: 12px;" />
-      <p class="media-caption"><strong>Figure 1: MK-DCSAU-Net Pipeline.</strong> Diagram showing the five-level encoder-decoder structure. Standard input convolution is replaced by parallel Multi-Kernel PFC blocks with auxiliary supervised heads in the decoder.</p>
+      <div class="hero-stats-row">
+        <div class="stat-card">
+          <div class="stat-number">0.8656 ↑</div>
+          <div class="stat-label">Mean IoU (+7.4% Gain)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">0.919 ↑</div>
+          <div class="stat-label">Dice Similarity Coefficient</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">0.8920 ↑</div>
+          <div class="stat-label">Diagnostic ROC-AUC Score</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">Springer</div>
+          <div class="stat-label">ICETCI 2026 Publication</div>
+        </div>
+      </div>
+    </section>
 
-      <h2 class="section-heading">Core Contributions</h2>
-      <ul style="margin-left: 20px; line-height: 1.8;">
-        <li>
-          <strong>Multi-Kernel PFC Block</strong>: Directly addresses lesion scale variability by utilizing three parallel depthwise separable convolutions ($3\times3, 7\times7, 11\times11$) to extract multi-scale details.
+    <!-- Main Content Card -->
+    <main class="content-card">
+      <div class="paper-callout">
+        <strong>Conference Publication:</strong> International Conference on Emerging Technologies and Computer Science (ICETCI 2026), <strong>Springer Nature</strong>.<br>
+        <strong>Authors:</strong> Sneha Chinchakandi, Yashaswini Mellikeri, Praneel Nadgir, Yashas A B, Sumaiya Pathan<br>
+        <strong>Research Focus:</strong> Medical Image Segmentation, Split-Attention CNNs, Blackout Noise Filtering, EfficientNet Backbones.
+      </div>
+
+      <p class="body-paragraph">
+        <strong>Abstract:</strong> One of the major dermoscopic melanoma classification problems is background noise; this is represented by hair, rulers, and gel residues, as well as the inability of the model to adapt to lesions of different sizes. To solve this, we propose <strong>MK-DCSAU-Net</strong> (Multi-Kernel Deeper and More Compact Split-Attention U-Net), which owns a Multi-Kernel Primary Feature Conservation (MK-PFC) module. The network extracts fine boundary details and global lesion structures by processing dermoscopic images with parallel $3\times3, 7\times7, \text{ and } 11\times11$ receptive fields.
+      </p>
+
+      <div class="project-image-wrapper">
+        <img src="../images/MKDCSA.jpg" class="project-image" alt="MK-DCSAU-Net Pipeline" />
+      </div>
+      <p class="image-caption"><strong>Figure 1: MK-DCSAU-Net Pipeline.</strong> Five-level encoder-decoder structure. Standard input convolution is replaced by parallel Multi-Kernel PFC blocks with auxiliary supervised heads in the decoder.</p>
+
+      <h2 class="section-title">Core Contributions</h2>
+      <ul class="contribution-list">
+        <li class="contribution-item">
+          <strong>Multi-Kernel PFC Block:</strong> Directly addresses lesion scale variability by utilizing three parallel depthwise separable convolutions ($3\times3, 7\times7, 11\times11$) to capture both micro-textures and macro-boundaries.
         </li>
-        <li>
-          <strong>Compact Split-Attention (CSA) Blocks</strong>: Suppresses background noise and accentuates diagnostically important structures through channel-wise feature recalibration.
+        <li class="contribution-item">
+          <strong>Compact Split-Attention (CSA) Blocks:</strong> Suppresses background noise and accentuates diagnostically relevant structures through channel-wise feature recalibration.
         </li>
-        <li>
-          <strong>Blackout Preprocessing</strong>: A mathematical bitwise mask operation ($I_{blackout} = I \odot M$) that sets all non-lesion pixels to zero, preventing the classifier from learning false correlations from hair or ruler marks.
+        <li class="contribution-item">
+          <strong>Blackout Preprocessing Pipeline:</strong> A mathematical bitwise mask operation ($I_{blackout} = I \odot M$) setting all non-lesion pixels to zero, preventing the classifier from learning false correlations from hair or rulers.
         </li>
-        <li>
-          <strong>Classification with Spatial Attention</strong>: Extends an EfficientNet-B3 backbone with a Spatial Attention Module (SAM) to isolate pigment networks under 8-way Test-Time Augmentation (TTA).
+        <li class="contribution-item">
+          <strong>Spatial Attention Module (SAM):</strong> Enhances an EfficientNet-B3 classifier backbone with a Spatial Attention Module to isolate pigment networks under 8-way Test-Time Augmentation (TTA).
         </li>
       </ul>
 
-      <div class="callout-box">
-        <h3 style="color: var(--accent-blue);">💡 High Boundary Fidelity & Gradient Stabilization</h3>
-        <p style="font-size: 0.95rem; margin: 0; line-height: 1.6;">
-          Deep supervision is integrated at intermediate decoder levels to stabilize gradient propagation during training on highly heterogeneous and class-imbalanced datasets. Combined with a mixed Dice BCE loss, it drastically improves segmentations on low-contrast lesions.
+      <div class="feature-callout">
+        <h3>💡 High Boundary Fidelity &amp; Intermediate Supervision</h3>
+        <p style="margin: 0; color: var(--text-secondary); font-size: 13.5px; line-height: 1.6;">
+          Deep supervision is integrated at intermediate decoder stages to stabilize gradient backpropagation across highly heterogeneous datasets. Combined with a mixed Dice-BCE loss, it drastically sharpens segmentations on low-contrast lesions.
         </p>
       </div>
 
-      <h2 class="section-heading">Quantitative Benchmarks</h2>
-      <p class="justify">
-        We evaluate the model on the ISIC 2018 Lesion Boundary Segmentation benchmark (2,594 images) and the Melanoma Detection dataset (10,015 images) validated via 10,000 Monte Carlo partitions:
+      <h2 class="section-title" style="margin-top: 36px;">Quantitative Benchmarks</h2>
+      <p class="body-paragraph">
+        Evaluated on the ISIC 2018 benchmark (2,594 images) across 10,000 Monte Carlo cross-validation partitions:
       </p>
 
-      <div class="apple-table-card">
-        <table class="apple-table">
+      <div class="metrics-table-wrapper">
+        <table class="metrics-table">
           <thead>
             <tr>
               <th>Segmentation Method</th>
@@ -235,13 +162,42 @@
             <tr class="highlight-row">
               <td><strong>MK-DCSAU-Net (Ours)</strong></td>
               <td><strong>Multi-Kernel CNN</strong></td>
-              <td><strong>0.919</strong></td>
-              <td><strong>0.866</strong> (+7.4% mIoU gain)</td>
+              <td><strong>0.919</strong> <span class="highlight-badge">Best</span></td>
+              <td><strong>0.866</strong> (+7.4% mIoU Gain) <span class="highlight-badge">Best</span></td>
             </tr>
           </tbody>
         </table>
       </div>
-    </div>
+    </main>
+
+    <!-- Footer -->
+    <hr class="horizontal-line" style="margin-top: 40px;">
+    <footer style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; font-size:12px; color:var(--text-muted); padding-bottom:30px;">
+      <div>&copy; 2026 Praneel Nadgir • Center for Visual Intelligence (CEVI). All rights reserved.</div>
+      <div>MK-DCSAU-Net • Springer Nature ICETCI 2026.</div>
+    </footer>
+
   </div>
+
+  <script>
+    // Theme Toggle (Dark Studio vs Light Aesthetic)
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeLabel = document.getElementById('themeLabel');
+    let isDarkTheme = false;
+
+    themeToggleBtn.addEventListener('click', () => {
+      isDarkTheme = !isDarkTheme;
+      if (isDarkTheme) {
+        document.documentElement.setAttribute('data-theme', 'studio-dark');
+        themeIcon.textContent = '☀️';
+        themeLabel.textContent = 'Studio Light';
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        themeIcon.textContent = '🌓';
+        themeLabel.textContent = 'Studio Dark';
+      }
+    });
+  </script>
 </body>
 </html>

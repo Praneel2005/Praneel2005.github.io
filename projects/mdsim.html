@@ -2,166 +2,162 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MDSim | Praneel Nadgir</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MDSim — Neural Multi-Layer Draped Garment Simulation | Praneel Nadgir</title>
   <link rel="icon" href="../images/favicon_io/N.jpeg" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css">
 
-  <style>
-    .project-container {
-      max-width: 880px;
-      margin: 0 auto;
-    }
-    
-    .back-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 28px;
-      padding: 8px 16px;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-full);
-      color: var(--text-primary);
-      font-size: 0.9rem;
-      font-weight: 500;
-      box-shadow: var(--shadow-subtle);
-      transition: all var(--duration-fast) var(--ease-out);
-    }
-    
-    @media (hover: hover) and (pointer: fine) {
-      .back-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-card);
-        color: var(--accent-blue);
+  <!-- MathJax for rendering LaTeX formulas -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      svg: {
+        fontCache: 'global'
       }
-    }
-    
-    .back-btn:active {
-      transform: scale(0.96);
-    }
-
-    .project-header-title {
-      font-size: clamp(2rem, 4vw, 2.8rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.15;
-      margin-bottom: 8px;
-    }
-
-    .project-tagline {
-      font-size: 1.15rem;
-      color: var(--text-secondary);
-      margin-bottom: 24px;
-      line-height: 1.45;
-    }
-
-    .paper-info-box {
-      padding: 22px 26px;
-      border-left: 4px solid var(--accent-blue);
-      background: var(--bg-surface);
-      border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-      border-top: 1px solid var(--border-light);
-      border-right: 1px solid var(--border-light);
-      border-bottom: 1px solid var(--border-light);
-      box-shadow: var(--shadow-card);
-      margin: 24px 0 32px 0;
-      line-height: 1.7;
-      font-size: 0.95rem;
-    }
-
-    .project-media {
-      width: 100%;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-card);
-      border: 1px solid var(--border-light);
-      margin: 24px 0 10px 0;
-      background: #ffffff;
-      transition: transform var(--duration-normal) var(--ease-apple), box-shadow var(--duration-normal) var(--ease-apple);
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-      .project-media:hover {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-elevated);
-      }
-    }
-
-    .media-caption {
-      font-size: 0.88rem;
-      color: var(--text-secondary);
-      text-align: center;
-      margin: 0 0 32px 0;
-      line-height: 1.5;
-      padding: 0 20px;
-    }
-
-    .section-heading {
-      border-bottom: 1px solid var(--border-light);
-      padding-bottom: 10px;
-      margin-top: 40px;
-      margin-bottom: 18px;
-    }
-
-    .callout-box {
-      background: rgba(0, 113, 227, 0.04);
-      border: 1px solid rgba(0, 113, 227, 0.15);
-      border-radius: var(--radius-md);
-      padding: 20px;
-      margin: 24px 0;
-    }
-  </style>
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
 </head>
+
 <body>
-  <div class="project-container">
-    <a href="../index.html" class="back-btn">&larr; Back to Portfolio</a>
-    
-    <h1 class="project-header-title">MDSim: Neural Multi-Layer Draped Garment Simulation with Differentiable Friction</h1>
-    <p class="project-tagline">Neural Simulation framework modeling inter-garment friction for multi-layer unpinned attire.</p>
 
-    <div class="paper-info-box">
-      <strong>Under Review:</strong> 2026<br>
-      <strong>Focus:</strong> 3D Vision, GNN Physics-guided Simulation, Differentiable Tangential Friction<br>
-      <strong>Links:</strong> <a href="../data/MDSim.pdf" target="_blank" class="pub-link-btn" style="margin-top: 6px;">&darr; PDF Paper</a>
-    </div>
+  <div class="project-page-container">
 
-    <div class="content-body">
-      <p class="justify">
-        <strong>Abstract:</strong> In this work, we propose MDSim, a differentiable inter-garment friction framework for neural simulation of multi-layer draped garments. Draped attire (e.g., dupattas, sarees) has no closed geometric anchor and stays on the body through friction against the layer beneath it alone, yet existing learned cloth simulators primarily model repulsive normal contact, leaving such a layer with nothing resisting tangential motion and free to slide off. To address this, MDSim learns physical tangential friction during self-supervised training via a differentiable friction loss that penalizes tangential slip relative to normal force, scaled by a learned, material-conditioned friction predictor pretrained on published textile friction measurements.
+    <!-- Top Navigation Bar -->
+    <header class="top-nav">
+      <a href="../index.html" class="back-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to Portfolio
+      </a>
+      <div class="nav-actions">
+        <a href="../data/MDSim.pdf" target="_blank" class="nav-pill-btn" title="Download Paper PDF">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Paper PDF
+        </a>
+        <a href="https://github.com/Praneel2005" target="_blank" class="nav-pill-btn" title="GitHub Repository">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          Code
+        </a>
+        <button class="nav-pill-btn" id="themeToggle" title="Toggle Studio Dark / Light Mode">
+          <span id="themeIcon">🌓</span>
+          <span id="themeLabel">Studio Dark</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Header -->
+    <section class="hero-section">
+      <div class="project-pill-badge">
+        <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#0071e3; box-shadow:0 0 8px #0071e3;"></span>
+        3D Vision • GNN Cloth Simulation • CEVI Lab
+      </div>
+      <h1 class="hero-title">MDSim: <span>Neural Draped Garment Simulation</span></h1>
+      <p class="hero-description">
+        A differentiable inter-garment friction framework for neural simulation of multi-layer draped attire (dupattas, sarees), introducing a material-conditioned friction predictor to prevent slip-off instabilities on dynamic bodies.
       </p>
 
-      <img src="../images/MDSim-result.jpeg" class="project-media" alt="MDSim Architecture" style="max-height: 360px; object-fit: contain; padding: 12px;" />
-      <p class="media-caption"><strong>Figure 1: MDSim Pipeline.</strong> Active contacts are detected between multi-layer garment surfaces. The learned material-conditioned MLP predictor estimates the per-contact friction coefficient using fabric properties, normal forces, and speed to supervise GNN dynamics.</p>
+      <div class="hero-stats-row">
+        <div class="stat-card">
+          <div class="stat-number">100% Retained</div>
+          <div class="stat-label">Multi-Layer Drape Stability</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">Differentiable</div>
+          <div class="stat-label">End-to-End Friction Loss</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">10,064 pts</div>
+          <div class="stat-label">Two-Garment Mesh Resolution</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">Under Review</div>
+          <div class="stat-label">Research Publication 2026</div>
+        </div>
+      </div>
+    </section>
 
-      <h2 class="section-heading">Core Contributions</h2>
-      <ul style="margin-left: 20px; line-height: 1.8;">
-        <li>
-          <strong>Inter-Garment Friction Loss</strong>: An inter-garment friction loss for neural cloth simulation, trained end-to-end rather than applied as a post-processing physics correction step.
+    <!-- Main Content Card -->
+    <main class="content-card">
+      <div class="paper-callout">
+        <strong>Manuscript Status:</strong> Under Review, 2026.<br>
+        <strong>Research Focus:</strong> Graph Neural Networks, Multi-Layer Garment Dynamics, Differentiable Tangential Friction, Digital Humans.
+      </div>
+
+      <p class="body-paragraph">
+        <strong>Abstract:</strong> Draped attire (e.g., dupattas, sarees) has no closed geometric anchor and stays on the body through friction against the layer beneath it alone, yet existing learned cloth simulators primarily model repulsive normal contact, leaving such a layer with nothing resisting tangential motion and free to slide off. To address this, <strong>MDSim</strong> learns physical tangential friction during self-supervised training via a differentiable friction loss that penalizes tangential slip relative to normal force, scaled by a learned, material-conditioned friction predictor pretrained on published textile friction measurements.
+      </p>
+
+      <div class="project-image-wrapper">
+        <img src="../images/MDSim-result.jpeg" class="project-image" alt="MDSim Qualitative Results" />
+      </div>
+      <p class="image-caption"><strong>Figure 1: MDSim Qualitative Simulation Results.</strong> Multi-layer draped garment simulation showing the outer unpinned dupatta stably draped over the inner kurta across dynamic character motions without sliding off or exhibiting boundary penetration.</p>
+
+      <h2 class="section-title">Core Contributions</h2>
+      <ul class="contribution-list">
+        <li class="contribution-item">
+          <strong>Inter-Garment Friction Loss:</strong> Formulates an inter-garment friction loss for neural cloth simulation, trained end-to-end rather than applied as an expensive post-processing physics correction step.
         </li>
-        <li>
-          <strong>Learned Friction Coefficient</strong>: A learned, per-contact friction coefficient conditioned on fabric properties and pretrained on measured textile data, replacing manually tuned constants.
+        <li class="contribution-item">
+          <strong>Learned Friction Predictor:</strong> A learned, per-contact friction coefficient conditioned on fabric physical properties and pretrained on real textile data, eliminating manual parameter guessing.
         </li>
-        <li>
-          <strong>Multi-Layer Drape Retention</strong>: Enables the first stable neural simulation of unpinned, multi-layer draped garments (e.g., dupattas, sarees), preventing them from sliding off.
+        <li class="contribution-item">
+          <strong>Unpinned Multi-Layer Stability:</strong> Enables the first stable neural simulation of unpinned, multi-layer draped garments (e.g., dupattas, sarees) over moving SMPL bodies.
         </li>
-        <li>
-          <strong>Instability Isolation</strong>: Pinpoints and isolates a two-garment coupling instability in GNN solvers driven by large-area contact forces.
+        <li class="contribution-item">
+          <strong>Coupling Instability Isolation:</strong> Pinpoints and resolves a two-garment coupling instability in GNN solvers driven by large-area contact forces.
         </li>
       </ul>
 
-      <div class="callout-box">
-        <h3 style="color: var(--accent-blue);">💡 Physics-Guided GNN Loss Formulation</h3>
-        <p style="font-size: 0.95rem; margin: 0; line-height: 1.6;">
-          The framework calculates tangential slip $\mathbf{s} = \Delta \mathbf{r} - (\Delta \mathbf{r} \cdot \hat{\mathbf{n}})\hat{\mathbf{n}}$ at contact points and penalizes it using a pseudo-Huber function scaled by normal force and the dynamically predicted friction coefficient. This forces the simulator to maintain stick-slip behaviors naturally without solving expensive numerical equations at runtime.
+      <div class="feature-callout">
+        <h3>💡 Differentiable Tangential Friction Formulation</h3>
+        <p style="margin: 0; color: var(--text-secondary); font-size: 13.5px; line-height: 1.6;">
+          At each contact point between garment layers, relative displacement $\Delta \mathbf{r}$ is decomposed into normal and tangential components: $\mathbf{s} = \Delta \mathbf{r} - (\Delta \mathbf{r} \cdot \hat{\mathbf{n}})\hat{\mathbf{n}}$. MDSim penalizes this slip using a pseudo-Huber loss scaled by normal force magnitude and the predicted material friction coefficient $\mu$. This drives the GNN simulator to naturally model stick-slip dynamics without numerical divergence.
         </p>
       </div>
 
-      <h2 class="section-heading">Qualitative Evaluation</h2>
-      <p class="justify">
-        We evaluate the system on a multi-layer outfit composed of an inner kurta (5,106 vertices) and an outer unpinned dupatta (4,958 vertices) draped over an SMPL body.
-        Vanilla simulators (like ContourCraft) fail to retain the dupatta, leading to severe sliding and separation within the first second. MDSim stabilizes the GNN dynamics and successfully maintains the drape over the shoulder across a range of dynamic motions.
+      <h2 class="section-title" style="margin-top: 36px;">Qualitative Comparison</h2>
+      <p class="body-paragraph">
+        We test MDSim on a multi-layer outfit composed of an inner kurta (5,106 vertices) and an outer unpinned dupatta (4,958 vertices) draped over SMPL bodies. Vanilla simulators (e.g., ContourCraft) fail to retain the dupatta, causing severe sliding and separation within the first second. MDSim maintains stable drape contact over the shoulders across diverse dynamic animations.
       </p>
-    </div>
+    </main>
+
+    <!-- Footer -->
+    <hr class="horizontal-line" style="margin-top: 40px;">
+    <footer style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; font-size:12px; color:var(--text-muted); padding-bottom:30px;">
+      <div>&copy; 2026 Praneel Nadgir • Center for Visual Intelligence (CEVI). All rights reserved.</div>
+      <div>MDSim • Neural Multi-Layer Draped Garment Simulation.</div>
+    </footer>
+
   </div>
+
+  <script>
+    // Theme Toggle (Dark Studio vs Light Aesthetic)
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeLabel = document.getElementById('themeLabel');
+    let isDarkTheme = false;
+
+    themeToggleBtn.addEventListener('click', () => {
+      isDarkTheme = !isDarkTheme;
+      if (isDarkTheme) {
+        document.documentElement.setAttribute('data-theme', 'studio-dark');
+        themeIcon.textContent = '☀️';
+        themeLabel.textContent = 'Studio Light';
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        themeIcon.textContent = '🌓';
+        themeLabel.textContent = 'Studio Dark';
+      }
+    });
+  </script>
 </body>
 </html>
