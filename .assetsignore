@@ -1,0 +1,11 @@
+.git
+.git/**
+.github
+.github/**
+.agents
+.agents/**
+.wrangler
+.wrangler/**
+node_modules
+node_modules/**
+README.md
