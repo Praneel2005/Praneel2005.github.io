@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>RoomPlanScanner — Spatial LiDAR Capture & Generative 3D Studio | Praneel Nadgir</title>
+  <link rel="icon" href="../images/favicon_io/P.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <!-- Load Google Model Viewer (latest ESM) -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <style>
+    /* 3D Studio & Gallery Engine Styles (Adapted from KALPIT 3D Asset Studio) */
+    .gallery-page-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+      width: 100%;
+    }
+
+    /* Video Hero Player Container */
+    .demo-video-wrapper {
+      position: relative;
+      width: 100%;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: #000000;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 36px;
+    }
+
+    .demo-video-wrapper video {
+      width: 100%;
+      height: auto;
+      max-height: 580px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* Controls & Filter Toolbar */
+    .toolbar-section {
+      position: sticky;
+      top: 16px;
+      z-index: 40;
+      background: var(--bg-surface-translucent);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      margin: 32px 0;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .category-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-chip {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: 7px 16px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition-smooth);
+    }
+
+    .filter-chip:hover {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+      background: rgba(0, 113, 227, 0.04);
+    }
+
+    .filter-chip.active {
+      background: var(--accent-primary);
+      border-color: var(--accent-primary);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(0, 113, 227, 0.3);
+    }
+
+    .chip-count {
+      font-size: 11px;
+      opacity: 0.85;
+      background: rgba(0, 0, 0, 0.12);
+      padding: 2px 7px;
+      border-radius: 999px;
+    }
+
+    .filter-chip.active .chip-count {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .toolbar-search-box {
+      position: relative;
+      min-width: 240px;
+      flex: 1;
+      max-width: 320px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 8px 14px 8px 36px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 13px;
+      outline: none;
+      transition: var(--transition-smooth);
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    /* 3D Asset Grid */
+    .models-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 28px;
+      margin-bottom: 40px;
+    }
+
+    .model-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition-smooth);
+      position: relative;
+    }
+
+    .model-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(0, 113, 227, 0.35);
+    }
+
+    .card-canvas-wrapper {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      background-color: var(--bg-card-canvas);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    model-viewer {
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      --poster-color: transparent;
+      touch-action: pan-y;
+      cursor: grab;
+    }
+
+    model-viewer:active {
+      cursor: grabbing;
+    }
+
+    .card-top-badges {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .category-badge {
+      background: var(--bg-surface-translucent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .size-badge {
+      background: var(--bg-surface-translucent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 500;
+    }
+
+    .card-body {
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 6px 0;
+      line-height: 1.3;
+    }
+
+    .card-description {
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      margin: 0 0 16px 0;
+    }
+
+    .card-meta-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+
+    .meta-tag {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      background: var(--bg-card-canvas);
+      padding: 3px 9px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .card-footer {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .inspect-btn {
+      flex: 1;
+      background: linear-gradient(135deg, #0071e3, #005bb5);
+      color: #ffffff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: var(--transition-smooth);
+      box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
+    }
+
+    .inspect-btn:hover {
+      background: linear-gradient(135deg, #005bb5, #004494);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 113, 227, 0.35);
+    }
+
+    .ar-icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      background: var(--bg-card-canvas);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 15px;
+      transition: var(--transition-smooth);
+    }
+
+    .ar-icon-btn:hover {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+      background: var(--bg-surface);
+      transform: translateY(-2px);
+    }
+
+    /* 3D Studio Inspector Modal */
+    .studio-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .studio-modal.open {
+      display: flex;
+      opacity: 1;
+    }
+
+    .studio-container {
+      width: 100%;
+      max-width: 1200px;
+      height: 88vh;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      display: flex;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .studio-stage {
+      flex: 1;
+      height: 100%;
+      background: radial-gradient(circle at center, #242735 0%, #0d0f14 100%);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .studio-top-bar {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 20;
+    }
+
+    .stage-nav-pill {
+      background: rgba(15, 17, 23, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-close-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(15, 17, 23, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .modal-close-btn:hover {
+      background: #ff453a;
+      border-color: #ff453a;
+      transform: scale(1.1);
+    }
+
+    .studio-controls-bar {
+      position: absolute;
+      bottom: 24px;
+      background: rgba(15, 17, 23, 0.85);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-full);
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 20;
+    }
+
+    .control-btn {
+      background: transparent;
+      border: none;
+      color: #d1d5db;
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition-smooth);
+    }
+
+    .control-btn:hover, .control-btn.active {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+    }
+
+    .control-btn.active {
+      color: #60a5fa;
+    }
+
+    .control-divider {
+      width: 1px;
+      height: 18px;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .studio-sidebar {
+      width: 380px;
+      height: 100%;
+      background: var(--bg-surface);
+      border-left: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      padding: 32px 28px;
+      overflow-y: auto;
+      z-index: 10;
+    }
+
+    .specs-group {
+      background: var(--bg-card-canvas);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      margin-bottom: 24px;
+    }
+
+    .spec-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 13px;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--border-subtle);
+    }
+
+    .spec-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .spec-key {
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .spec-val {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      text-align: right;
+    }
+
+    .ar-cta-btn {
+      width: 100%;
+      background: var(--accent-primary);
+      color: #ffffff;
+      border: none;
+      padding: 13px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: var(--transition-smooth);
+      box-shadow: 0 4px 15px rgba(0, 113, 227, 0.25);
+    }
+
+    .ar-cta-btn:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    .snapshot-btn {
+      width: 100%;
+      background: var(--bg-card-canvas);
+      color: var(--text-primary);
+      border: 1px solid var(--border-subtle);
+      padding: 11px;
+      border-radius: var(--radius-md);
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 10px;
+      transition: var(--transition-smooth);
+    }
+
+    .snapshot-btn:hover {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+    }
+
+    /* Modal Navigation Arrows */
+    .modal-nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(15, 17, 23, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 20px;
+      z-index: 25;
+      transition: var(--transition-smooth);
+    }
+
+    .modal-nav-arrow:hover {
+      background: var(--accent-primary);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .modal-nav-prev { left: 20px; }
+    .modal-nav-next { right: 20px; }
+
+    /* AR QR Modal */
+    .qr-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1100;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(20px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .qr-modal.open {
+      display: flex;
+      opacity: 1;
+    }
+
+    .qr-modal-content {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    @media (max-width: 980px) {
+      .studio-container {
+        flex-direction: column;
+        height: 94vh;
+      }
+      .studio-sidebar {
+        width: 100%;
+        height: 45%;
+        border-left: none;
+        border-top: 1px solid var(--border-subtle);
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="gallery-page-container">
+
+    <!-- Top Navigation Bar -->
+    <header class="top-nav">
+      <a href="../index.html" class="back-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to Portfolio
+      </a>
+      <div class="nav-actions">
+        <a href="https://github.com/Praneel2005" target="_blank" class="nav-pill-btn" title="GitHub Repository">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          Code
+        </a>
+        <button class="nav-pill-btn" id="themeToggle" title="Toggle Studio Dark / Light Mode">
+          <span id="themeIcon">🌓</span>
+          <span id="themeLabel">Studio Dark</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Header -->
+    <section class="hero-section">
+      <div class="project-pill-badge">
+        <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#0071e3; box-shadow:0 0 8px #0071e3;"></span>
+        iOS Spatial Computing • LiDAR &amp; RoomPlan • Generative 3D
+      </div>
+      <h1 class="hero-title">RoomPlanScanner: <span>Spatial LiDAR &amp; Generative 3D Studio</span></h1>
+      <p class="hero-description">
+        An end-to-end spatial computing pipeline on iOS (SwiftUI + SceneKit + ARKit/RoomPlan) combining parametric LiDAR room mapping, zero-latency on-device Vision matching, cloud generative asset replacement via ShilpAI (TRELLIS + Hunyuan3D-2.1 PBR), and a zero-drift native Swift GLB serialization engine for Meta Quest VR staging.
+      </p>
+
+      <div class="hero-stats-row">
+        <div class="stat-card">
+          <div class="stat-number">1:1 Metric</div>
+          <div class="stat-label">Zero-Drift Scale for Unity/VR</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">16 Classes</div>
+          <div class="stat-label">RoomPlan CoreML Taxonomy</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">0-Latency</div>
+          <div class="stat-label">On-Device Vision Matching</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">WebXR &amp; AR</div>
+          <div class="stat-label">Interactive 3D QuickLook Ready</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Live Video Demonstration -->
+    <div class="demo-video-wrapper">
+      <video controls autoplay loop muted playsinline poster="../images/project.png">
+        <source src="../videos/roomscanner_demo.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <p class="image-caption" style="margin-top:-20px; margin-bottom:36px;"><strong>Figure 1: Live iOS Application Walkthrough.</strong> Real-time RoomPlan LiDAR scanning, interactive 3D SceneKit viewport, procedural floor texturing, custom model replacement with pinch-to-scale gestures, and native GLB export.</p>
+
+    <!-- Interactive 3D Model Studio & Gallery Section -->
+    <h2 class="section-title">Interactive 3D Spatial Asset Studio</h2>
+    <p class="body-paragraph">
+      Explore interactive 3D assets captured, generated, and staged by our pipeline. Rotate, zoom, inspect physical PBR materials, toggle studio lighting, or tap <strong>Launch in AR</strong> to place models directly into your physical space.
+    </p>
+
+    <!-- Controls & Filter Toolbar -->
+    <section class="toolbar-section">
+      <div class="category-filters" id="categoryFilters">
+        <button class="filter-chip active" data-category="all">
+          All Assets <span class="chip-count" id="count-all">4</span>
+        </button>
+        <button class="filter-chip" data-category="furniture">
+          Furniture &amp; Staging <span class="chip-count" id="count-furniture">2</span>
+        </button>
+        <button class="filter-chip" data-category="generative">
+          Generative AI Assets <span class="chip-count" id="count-generative">2</span>
+        </button>
+      </div>
+
+      <div class="toolbar-search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="modelSearch" placeholder="Search 3D models, categories, PBR...">
+      </div>
+    </section>
+
+    <!-- 3D Models Grid -->
+    <main class="models-grid" id="modelsGrid">
+      <!-- Dynamically Rendered by JavaScript -->
+    </main>
+
+    <!-- Deep Technical Breakdown -->
+    <main class="content-card">
+      <div class="paper-callout">
+        <strong>Pipeline Architecture:</strong> iOS App (SwiftUI, SceneKit, ARKit RoomPlan) &bull; GPU Backend (Pegasus, TRELLIS, Hunyuan3D-2.1) &bull; Downstream: Unity Meta Quest VR Walkthrough.
+      </div>
+
+      <h2 class="section-title">Core Engineering Contributions</h2>
+      <ul class="contribution-list">
+        <li class="contribution-item">
+          <strong>Native Swift glTF/GLB Serialization Engine (Phase 1):</strong> Constructed a zero-dependency binary `.glb` packer in native Swift that traverses SceneKit's `SCNScene` graph. Unlike standard USDZ converters that flatten hierarchies or cause scale drift, our engine maintains 1:1 metric scale mapping and enforces semantic node isolation (`<Category>_<Index>`, e.g., `Wall_1`, `Sofa_1`) so individual furniture items can be grasped and moved inside Meta Quest VR.
+        </li>
+        <li class="contribution-item">
+          <strong>Generative 3D Asset Replacement via ShilpAI (Phase 2):</strong> Built the "Magic Generate" client-server workflow connecting iOS to a Pegasus GPU server. Converts text descriptions or single photos into rich 3D geometries via <strong>TRELLIS</strong> and synthesizes physically-based rendering (PBR) roughness, metallic, and normal maps via <strong>Hunyuan3D-2.1</strong>.
+        </li>
+        <li class="contribution-item">
+          <strong>Dynamic Bounding-Box Fitting &amp; Direct-Manipulation Gestures:</strong> Dynamically clears primitive bounding boxes, wraps USDZ models under a `"CustomModelRoot"` node, and computes uniform matrix scale factors to fit custom furniture snugly into RoomPlan's measured real-world dimensions. Integrated `UIPinchGestureRecognizer` for continuous scaling and `UIPanGestureRecognizer` for dragging models across the floor.
+        </li>
+        <li class="contribution-item">
+          <strong>On-Device Instant Vision Matching (Phase 3):</strong> Solved the 30–120s cloud generation wait time by implementing zero-latency on-device matching using Apple's Vision framework (`VNGenerateImageFeaturePrintRequest`). During scanning, an Algorithm R reservoir sampling cache (`ScanFrameCache.swift`) captures 200 memory-safe camera frames. At scan end, `ObjectPhotoCropper.swift` back-projects 3D object centroids to crop the most centrally framed photo and matches it against previously generated local assets.
+        </li>
+      </ul>
+
+      <div class="feature-callout">
+        <h3>💡 Closing the Visual Quality Gap (Matching Polycam)</h3>
+        <p style="margin: 0; color: var(--text-secondary); font-size: 13.5px; line-height: 1.6;">
+          To eliminate the flat gray appearance of raw RoomPlan output, we introduced a centralized lighting and shader system (`RoomStyleHelper.swift`). It deploys an ambient fill light with a directional key light casting soft shadows (`shadowRadius = 8.0`), generates procedural Honey Oak wood parquet floor textures via `UIGraphicsImageRenderer` without asset bundle bloat, and assigns distinct physical PBR shaders (fabric sofas, mahogany tables, matte cabinets, steel appliances) baked directly into the exported `.glb` stream for Unity parity.
+        </p>
+      </div>
+
+      <h2 class="section-title" style="margin-top: 36px;">Quantitative Architecture Benchmarks</h2>
+      <div class="metrics-table-wrapper">
+        <table class="metrics-table">
+          <thead>
+            <tr>
+              <th>Pipeline Feature</th>
+              <th>Standard RoomPlan / SceneKit</th>
+              <th>RoomPlanScanner (Our Pipeline)</th>
+              <th>Advantage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight-row">
+              <td>Export Format for Unity</td>
+              <td>USDZ (Material/Scale Dropouts)</td>
+              <td><strong>Native Binary .glb (glTF 2.0)</strong> <span class="highlight-badge">Best</span></td>
+              <td>Zero-drift 1:1 metric scale, packed PBR textures</td>
+            </tr>
+            <tr>
+              <td>Node Hierarchy</td>
+              <td>Merged/Flattened or Random UUIDs</td>
+              <td><strong>Preserved Semantic Hierarchy</strong> <span class="highlight-badge">Best</span></td>
+              <td>Every wall and furniture item individually movable in VR</td>
+            </tr>
+            <tr>
+              <td>Furniture Replacement</td>
+              <td>Manual 3D Modeling required</td>
+              <td><strong>Instant Vision Match &amp; Cloud Generative AI</strong> <span class="highlight-badge">Best</span></td>
+              <td>Zero-latency local match or custom TRELLIS/Hunyuan3D synthesis</td>
+            </tr>
+            <tr>
+              <td>Memory Frame Sampling</td>
+              <td>11s FIFO Ring Buffer (drops history)</td>
+              <td><strong>Algorithm R Reservoir Sampling (200 frames)</strong> <span class="highlight-badge">Best</span></td>
+              <td>Full-room camera coverage with low memory footprint</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <hr class="horizontal-line" style="margin-top: 40px;">
+    <footer style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; font-size:12px; color:var(--text-muted); padding-bottom:30px;">
+      <div>&copy; 2026 Praneel Nadgir • Center for Visual Intelligence (CEVI). All rights reserved.</div>
+      <div>RoomPlanScanner • Spatial Computing &amp; Generative 3D Staging.</div>
+    </footer>
+
+  </div>
+
+  <!-- 3D Studio Deep-Dive Inspector Modal -->
+  <div class="studio-modal" id="studioModal" role="dialog" aria-modal="true">
+    <div class="studio-container">
+      
+      <!-- Studio 3D Canvas Stage -->
+      <div class="studio-stage">
+        <div class="studio-top-bar">
+          <div class="stage-nav-pill">
+            <span id="studioActiveCategory">FURNITURE</span>
+            <span style="opacity:0.4;">|</span>
+            <span id="studioIndexBadge" style="font-family:'JetBrains Mono', monospace; font-size:11px;">01 / 04</span>
+          </div>
+          <button class="modal-close-btn" id="closeStudioBtn" title="Close Studio (Esc)">✕</button>
+        </div>
+
+        <button class="modal-nav-arrow modal-nav-prev" id="prevModelBtn" title="Previous Asset (←)">‹</button>
+        <button class="modal-nav-arrow modal-nav-next" id="nextModelBtn" title="Next Asset (→)">›</button>
+
+        <model-viewer
+          id="studioViewer"
+          class="studio-model-viewer"
+          camera-controls
+          touch-action="pan-y"
+          auto-rotate
+          rotation-per-second="20deg"
+          shadow-intensity="1.5"
+          shadow-softness="0.8"
+          exposure="1.0"
+          environment-image="neutral"
+          interaction-prompt="auto"
+          ar
+          ar-modes="webxr scene-viewer quick-look"
+          ar-scale="auto"
+          quick-look-browsers="safari chrome">
+          <button slot="ar-button" id="studioNativeArSlot" style="display:none;" aria-hidden="true"></button>
+        </model-viewer>
+
+        <!-- Studio Stage Controls -->
+        <div class="studio-controls-bar">
+          <button class="control-btn active" id="toggleRotateBtn" title="Toggle Turntable Auto-Rotation">
+            <span>🔄</span> Auto Spin
+          </button>
+          <div class="control-divider"></div>
+          <button class="control-btn" id="resetCamBtn" title="Reset Camera View">
+            <span>🎯</span> Center View
+          </button>
+          <div class="control-divider"></div>
+          <button class="control-btn" id="camFrontBtn">Front</button>
+          <button class="control-btn" id="camIsoBtn">Iso</button>
+          <button class="control-btn" id="camTopBtn">Top</button>
+          <div class="control-divider"></div>
+          <button class="control-btn" id="lightingToggleBtn" title="Toggle Studio Softbox Lighting">
+            <span>💡</span> Neutral HDRI
+          </button>
+        </div>
+      </div>
+
+      <!-- Studio Sidebar Specifications -->
+      <div class="studio-sidebar">
+        <div class="sidebar-header">
+          <span class="sidebar-category" id="sidebarCategory" style="font-size:11px; font-weight:700; color:var(--accent-primary); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:6px;">SPATIAL 3D ASSET</span>
+          <h2 class="sidebar-title" id="sidebarTitle" style="font-family:'Space Grotesk', sans-serif; font-size:22px; font-weight:700; color:var(--text-primary); margin:0 0 12px 0;">Model Title</h2>
+          <p class="sidebar-desc" id="sidebarDescription" style="font-size:13.5px; line-height:1.6; color:var(--text-secondary); margin-bottom:20px;">Detailed pipeline metadata will appear here.</p>
+        </div>
+
+        <div class="specs-group">
+          <div class="specs-title" style="font-size:11.5px; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:10px;">Technical Telemetry</div>
+          <div class="spec-item">
+            <span class="spec-key">File Format</span>
+            <span class="spec-val" id="specFormat">GLB (glTF 2.0) / USDZ</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-key">Asset Size</span>
+            <span class="spec-val" id="specSize">1.2 MB</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-key">Material Pipeline</span>
+            <span class="spec-val" id="specPBR">PBR Metallic-Roughness</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-key">Reconstruction</span>
+            <span class="spec-val" id="specPipeline">RoomPlan LiDAR + Generative AI</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-key">Provenance</span>
+            <span class="spec-val">CEVI Spatial Computing Lab</span>
+          </div>
+        </div>
+
+        <div class="sidebar-actions" style="margin-top:auto;">
+          <button class="ar-cta-btn" id="launchArBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+            Launch in AR / QuickLook
+          </button>
+          <button class="snapshot-btn" id="takeSnapshotBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            Capture Studio Snapshot (.png)
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- AR QR Modal -->
+  <div class="qr-modal" id="arQrModal" role="dialog" aria-modal="true">
+    <div class="qr-modal-content">
+      <button class="modal-close-btn" id="closeQrBtn" style="position:absolute; top:16px; right:16px;">✕</button>
+      <div style="width:48px; height:48px; margin:0 auto 12px; background:rgba(0,113,227,0.1); border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--accent-primary);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+      </div>
+      <h3 style="font-family:'Space Grotesk', sans-serif; font-size:20px; font-weight:700; margin:0 0 8px 0; color:var(--text-primary);">View in Augmented Reality</h3>
+      <p style="font-size:13px; line-height:1.5; color:var(--text-secondary); margin:0 0 20px 0;">Scan this QR code with your iPhone, iPad, or Android camera to place this model in your room at 1:1 scale.</p>
+      <div style="background:#ffffff; padding:12px; border-radius:var(--radius-md); display:inline-block; border:1px solid var(--border-subtle); margin-bottom:16px;">
+        <img id="qrCodeImg" src="" alt="AR QR Code" width="180" height="180" style="display:block;">
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript 3D Studio Engine -->
+  <script>
+    // Asset Catalog (Ready to link your real GLB models)
+    const ASSETS_DATA = [
+      {
+        id: 'sofa_chesterfield',
+        title: 'Generative Leather Chesterfield Sofa',
+        category: 'furniture',
+        categoryName: 'Furniture & Staging',
+        src: '../assets/models/earrings/jhumka_2.glb', // Ready for your room/furniture .glb file!
+        size: '2.4 MB',
+        description: 'Synthesized via ShilpAI (TRELLIS + Hunyuan3D-2.1 PBR), auto-scaled to fit RoomPlan bounding box dimensions with custom roughness and normal maps.',
+        pipeline: 'ShilpAI Generative AI + RoomPlan Bounding-Box Fitting',
+        tags: ['PBR', 'Leather', 'TRELLIS', 'Sofa']
+      },
+      {
+        id: 'chair_wood',
+        title: 'Heritage Armchair Asset',
+        category: 'furniture',
+        categoryName: 'Furniture & Staging',
+        src: '../assets/models/earrings/jhumka_4.glb',
+        size: '1.8 MB',
+        description: 'On-device vision-matched chair model, cropped from camera frames and auto-swapped using Algorithm R reservoir sampling.',
+        pipeline: 'Vision VNFeaturePrint Instant Match',
+        tags: ['Vision Match', 'Algorithm R', 'Chair', 'PBR']
+      },
+      {
+        id: 'room_floorplan_mesh',
+        title: 'Parametric Room Capture (GLB)',
+        category: 'generative',
+        categoryName: 'Scanned Architecture',
+        src: '../assets/models/swords/ancient_dagger_ggl_3.glb',
+        size: '3.1 MB',
+        description: 'Native Swift GLB export featuring separated wall, door, and furniture nodes with procedural parquet floor textures and soft lighting.',
+        pipeline: 'Native Swift GLBExporter (1:1 Metric Scale)',
+        tags: ['RoomPlan', 'glTF 2.0', 'Unity Ready', 'Meta Quest']
+      },
+      {
+        id: 'custom_table_asset',
+        title: 'Modern Dining Table',
+        category: 'generative',
+        categoryName: 'Furniture & Staging',
+        src: '../assets/models/swords/dagger_ggl_1.glb',
+        size: '1.2 MB',
+        description: 'Procedural mahogany PBR shader with uniform aspect-ratio preservation and direct-manipulation pinch-to-scale controls.',
+        pipeline: 'RoomStyleHelper PBR Category Shader',
+        tags: ['Mahogany', 'PBR', 'Pinch-Scale']
+      }
+    ];
+
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let activeStudioIndex = 0;
+    let filteredAssets = [...ASSETS_DATA];
+    let isAutoRotating = true;
+    let isStudioLightHDRI = true;
+
+    const modelsGrid = document.getElementById('modelsGrid');
+    const categoryFilters = document.getElementById('categoryFilters');
+    const modelSearch = document.getElementById('modelSearch');
+    const studioModal = document.getElementById('studioModal');
+    const studioViewer = document.getElementById('studioViewer');
+    const closeStudioBtn = document.getElementById('closeStudioBtn');
+    const prevModelBtn = document.getElementById('prevModelBtn');
+    const nextModelBtn = document.getElementById('nextModelBtn');
+    const themeToggleBtn = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeLabel = document.getElementById('themeLabel');
+
+    const studioActiveCategory = document.getElementById('studioActiveCategory');
+    const studioIndexBadge = document.getElementById('studioIndexBadge');
+    const sidebarCategory = document.getElementById('sidebarCategory');
+    const sidebarTitle = document.getElementById('sidebarTitle');
+    const sidebarDescription = document.getElementById('sidebarDescription');
+    const specFormat = document.getElementById('specFormat');
+    const specSize = document.getElementById('specSize');
+    const specPipeline = document.getElementById('specPipeline');
+    const toggleRotateBtn = document.getElementById('toggleRotateBtn');
+    const resetCamBtn = document.getElementById('resetCamBtn');
+    const camFrontBtn = document.getElementById('camFrontBtn');
+    const camIsoBtn = document.getElementById('camIsoBtn');
+    const camTopBtn = document.getElementById('camTopBtn');
+    const lightingToggleBtn = document.getElementById('lightingToggleBtn');
+    const takeSnapshotBtn = document.getElementById('takeSnapshotBtn');
+    const launchArBtn = document.getElementById('launchArBtn');
+
+    function renderGrid() {
+      filteredAssets = ASSETS_DATA.filter(item => {
+        const matchesCategory = currentFilter === 'all' || item.category === currentFilter;
+        const matchesSearch = searchQuery === '' || 
+          item.title.toLowerCase().includes(searchQuery) ||
+          item.description.toLowerCase().includes(searchQuery) ||
+          item.tags.some(t => t.toLowerCase().includes(searchQuery));
+        return matchesCategory && matchesSearch;
+      });
+
+      modelsGrid.innerHTML = filteredAssets.map((asset, index) => {
+        const globalIndex = ASSETS_DATA.findIndex(a => a.id === asset.id);
+        return `
+          <article class="model-card">
+            <div class="card-canvas-wrapper">
+              <div class="card-top-badges">
+                <span class="category-badge">${asset.categoryName}</span>
+                <span class="size-badge">${asset.size}</span>
+              </div>
+              <model-viewer
+                id="mv-${asset.id}"
+                src="${asset.src}"
+                alt="${asset.title}"
+                loading="lazy"
+                reveal="auto"
+                camera-controls
+                touch-action="pan-y"
+                auto-rotate
+                rotation-per-second="18deg"
+                shadow-intensity="1.2"
+                exposure="1.0"
+                environment-image="neutral"
+                ar
+                ar-modes="webxr scene-viewer quick-look">
+              </model-viewer>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">${asset.title}</h3>
+              <p class="card-description">${asset.description}</p>
+              <div class="card-meta-tags">
+                ${asset.tags.map(t => `<span class="meta-tag">#${t}</span>`).join('')}
+              </div>
+              <div class="card-footer">
+                <button class="inspect-btn" onclick="openStudio(${globalIndex})">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                  Inspect in 3D Studio
+                </button>
+                <button class="ar-icon-btn" title="Launch AR QuickLook" onclick="triggerARForAsset(${globalIndex})">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+                </button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    categoryFilters.addEventListener('click', (e) => {
+      const chip = e.target.closest('.filter-chip');
+      if (!chip) return;
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      currentFilter = chip.getAttribute('data-category');
+      renderGrid();
+    });
+
+    let debounceTimer;
+    modelSearch.addEventListener('input', (e) => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        searchQuery = e.target.value.trim().toLowerCase();
+        renderGrid();
+      }, 180);
+    });
+
+    function isArCapableMobile() {
+      const ua = navigator.userAgent || "";
+      return /iPad|iPhone|iPod|Android/i.test(ua);
+    }
+
+    const arQrModal = document.getElementById("arQrModal");
+    const closeQrBtn = document.getElementById("closeQrBtn");
+    const qrCodeImg = document.getElementById("qrCodeImg");
+
+    function openArQrModal(asset) {
+      const currentUrl = new URL(window.location.href);
+      currentUrl.searchParams.set("model", asset.id);
+      currentUrl.searchParams.set("ar", "1");
+      qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=360x360&margin=8&data=${encodeURIComponent(currentUrl.toString())}`;
+      arQrModal.classList.add("open");
+    }
+
+    if (closeQrBtn) closeQrBtn.addEventListener("click", () => arQrModal.classList.remove("open"));
+    if (arQrModal) arQrModal.addEventListener("click", (e) => { if (e.target === arQrModal) arQrModal.classList.remove("open"); });
+
+    window.triggerARForAsset = function(index) {
+      const asset = ASSETS_DATA[index];
+      if (!asset) return;
+      if (isArCapableMobile()) {
+        const mv = document.getElementById(`mv-${asset.id}`) || studioViewer;
+        if (mv && mv.canActivateAR) mv.activateAR();
+      } else {
+        openArQrModal(asset);
+      }
+    };
+
+    window.openStudio = function(index) {
+      activeStudioIndex = index;
+      const asset = ASSETS_DATA[index];
+      if (!asset) return;
+
+      studioActiveCategory.textContent = asset.categoryName.toUpperCase();
+      studioIndexBadge.textContent = `${String(index + 1).padStart(2, '0')} / ${String(ASSETS_DATA.length).padStart(2, '0')}`;
+      sidebarCategory.textContent = asset.categoryName.toUpperCase();
+      sidebarTitle.textContent = asset.title;
+      sidebarDescription.textContent = asset.description;
+      specFormat.textContent = 'GLB (glTF 2.0)';
+      specSize.textContent = asset.size;
+      specPipeline.textContent = asset.pipeline;
+
+      studioViewer.src = asset.src;
+      studioViewer.alt = asset.title;
+      studioModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+
+    function closeStudio() {
+      studioModal.classList.remove('open');
+      document.body.style.overflow = '';
+      studioViewer.src = '';
+    }
+
+    closeStudioBtn.addEventListener('click', closeStudio);
+    studioModal.addEventListener('click', (e) => { if (e.target === studioModal) closeStudio(); });
+
+    prevModelBtn.addEventListener('click', () => {
+      activeStudioIndex = (activeStudioIndex - 1 + ASSETS_DATA.length) % ASSETS_DATA.length;
+      openStudio(activeStudioIndex);
+    });
+
+    nextModelBtn.addEventListener('click', () => {
+      activeStudioIndex = (activeStudioIndex + 1) % ASSETS_DATA.length;
+      openStudio(activeStudioIndex);
+    });
+
+    toggleRotateBtn.addEventListener('click', () => {
+      isAutoRotating = !isAutoRotating;
+      studioViewer.autoRotate = isAutoRotating;
+      toggleRotateBtn.classList.toggle('active', isAutoRotating);
+    });
+
+    resetCamBtn.addEventListener('click', () => {
+      studioViewer.cameraOrbit = '0deg 75deg 105%';
+      studioViewer.cameraTarget = 'auto auto auto';
+    });
+
+    camFrontBtn.addEventListener('click', () => { studioViewer.cameraOrbit = '0deg 90deg 100%'; });
+    camIsoBtn.addEventListener('click', () => { studioViewer.cameraOrbit = '45deg 65deg 110%'; });
+    camTopBtn.addEventListener('click', () => { studioViewer.cameraOrbit = '0deg 0deg 115%'; });
+
+    lightingToggleBtn.addEventListener('click', () => {
+      isStudioLightHDRI = !isStudioLightHDRI;
+      studioViewer.environmentImage = isStudioLightHDRI ? 'neutral' : '';
+      lightingToggleBtn.innerHTML = isStudioLightHDRI ? '<span>💡</span> Neutral HDRI' : '<span>🔦</span> Direct Studio';
+    });
+
+    launchArBtn.addEventListener('click', () => { triggerARForAsset(activeStudioIndex); });
+
+    takeSnapshotBtn.addEventListener('click', async () => {
+      try {
+        const dataUrl = await studioViewer.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.href = dataUrl;
+        a.download = `${ASSETS_DATA[activeStudioIndex].id}_snapshot.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } catch (err) {
+        alert('Could not capture snapshot.');
+      }
+    });
+
+    // Theme Toggle
+    let isDarkTheme = false;
+    themeToggleBtn.addEventListener('click', () => {
+      isDarkTheme = !isDarkTheme;
+      if (isDarkTheme) {
+        document.documentElement.setAttribute('data-theme', 'studio-dark');
+        themeIcon.textContent = '☀️';
+        themeLabel.textContent = 'Studio Light';
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        themeIcon.textContent = '🌓';
+        themeLabel.textContent = 'Studio Dark';
+      }
+    });
+
+    renderGrid();
+  </script>
+</body>
+</html>
