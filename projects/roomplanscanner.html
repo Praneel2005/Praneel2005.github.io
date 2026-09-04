@@ -21,25 +21,68 @@
       width: 100%;
     }
 
-    /* Video Hero Player Container */
-    .demo-video-wrapper {
-      position: relative;
-      width: 100%;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      background: #000000;
-      border: 1px solid var(--border-subtle);
-      box-shadow: var(--shadow-lg);
-      margin-bottom: 36px;
+    /* Dual Portrait Video Showcase Styles */
+    .portrait-showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      max-width: 860px;
+      margin: 0 auto 36px auto;
     }
 
-    .demo-video-wrapper video {
+    .phone-mockup-card {
+      background: #0d0f14;
+      border-radius: 40px;
+      padding: 10px;
+      border: 4px solid #222530;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35), 0 4px 14px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+    }
+
+    .phone-mockup-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 35px 75px rgba(0, 0, 0, 0.45);
+      border-color: rgba(0, 113, 227, 0.5);
+    }
+
+    .phone-screen-container {
+      width: 100%;
+      border-radius: 30px;
+      overflow: hidden;
+      background: #000000;
+      position: relative;
+    }
+
+    .phone-screen-container video {
       width: 100%;
       height: auto;
-      max-height: 580px;
-      object-fit: contain;
+      max-height: 640px;
+      object-fit: cover;
       display: block;
-      margin: 0 auto;
+    }
+
+    .phone-info-bar {
+      padding: 14px 12px 6px;
+      text-align: center;
+    }
+
+    .phone-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 6px 0;
+    }
+
+    .phone-subtitle {
+      font-size: 12.5px;
+      color: #9ca3af;
+      margin: 0;
+      line-height: 1.45;
     }
 
     /* Controls & Filter Toolbar */
@@ -682,14 +725,37 @@
       </div>
     </section>
 
-    <!-- Interactive Live Video Demonstration -->
-    <div class="demo-video-wrapper">
-      <video controls autoplay loop muted playsinline poster="../images/project.png">
-        <source src="../videos/roomscanner_demo.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
+    <!-- Dual Portrait Mobile Video Showcase -->
+    <div class="portrait-showcase-grid">
+      <!-- Phone 1: Real-Time Scanning -->
+      <div class="phone-mockup-card">
+        <div class="phone-screen-container">
+          <video controls autoplay loop muted playsinline>
+            <source src="../videos/room_scanning_portrait.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="phone-info-bar">
+          <div class="phone-title">📱 Live LiDAR Room Scanning</div>
+          <p class="phone-subtitle">Real-time parametric room mapping with CoreML surface and boundary classification.</p>
+        </div>
+      </div>
+
+      <!-- Phone 2: Staging & Custom Features -->
+      <div class="phone-mockup-card">
+        <div class="phone-screen-container">
+          <video controls autoplay loop muted playsinline>
+            <source src="../videos/room_feature_portrait.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="phone-info-bar">
+          <div class="phone-title">🎨 3D Staging &amp; Custom Features</div>
+          <p class="phone-subtitle">Direct SceneKit manipulation, floor parquet texturing, and native GLB export.</p>
+        </div>
+      </div>
     </div>
-    <p class="image-caption" style="margin-top:-20px; margin-bottom:36px;"><strong>Figure 1: Live iOS Application Walkthrough.</strong> Real-time RoomPlan LiDAR scanning, interactive 3D SceneKit viewport, procedural floor texturing, custom model replacement with pinch-to-scale gestures, and native GLB export.</p>
+    <p class="image-caption" style="margin-top:-16px; margin-bottom:36px;"><strong>Figure 1: Dual-Stream iOS Application Walkthrough.</strong> (Left) Live LiDAR scanning capturing room dimensions in real-world meters. (Right) SceneKit 3D viewport with procedural floor textures and custom asset replacement.</p>
 
     <!-- Interactive 3D Model Studio & Gallery Section -->
     <h2 class="section-title">Interactive 3D Spatial Asset Studio</h2>
@@ -701,7 +767,10 @@
     <section class="toolbar-section">
       <div class="category-filters" id="categoryFilters">
         <button class="filter-chip active" data-category="all">
-          All Assets <span class="chip-count" id="count-all">4</span>
+          All Assets <span class="chip-count" id="count-all">5</span>
+        </button>
+        <button class="filter-chip" data-category="rooms">
+          Scanned Rooms (LiDAR) <span class="chip-count" id="count-rooms">1</span>
         </button>
         <button class="filter-chip" data-category="furniture">
           Furniture &amp; Staging <span class="chip-count" id="count-furniture">2</span>
@@ -924,6 +993,17 @@
   <script>
     // Asset Catalog (Ready to link your real GLB models)
     const ASSETS_DATA = [
+      {
+        id: 'scanned_room_xr1',
+        title: 'Parametric Scanned Room (Xr1.glb)',
+        category: 'rooms',
+        categoryName: 'Scanned Room (LiDAR)',
+        src: '../assets/models/Xr1.glb',
+        size: '4.3 MB',
+        description: 'Full real-world room captured with iPhone LiDAR and exported via our native Swift GLBExporter engine. Features separated wall, door, and furniture nodes with 1:1 metric scale.',
+        pipeline: 'Apple RoomPlan LiDAR + Native Swift GLBExporter',
+        tags: ['RoomPlan', 'LiDAR', 'glTF 2.0', 'Meta Quest VR']
+      },
       {
         id: 'sofa_chesterfield',
         title: 'Generative Leather Chesterfield Sofa',
