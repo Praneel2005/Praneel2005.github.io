@@ -682,35 +682,17 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         Back to Portfolio
       </a>
-      <div class="nav-actions">
-        <a href="kalpit.html" class="nav-pill-btn" title="Project KALPIT Suite">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-          Project KALPIT
-        </a>
-        <a href="shilpai.html" class="nav-pill-btn" title="ShilpAI Generative Suite">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-          ShilpAI
-        </a>
-        <a href="gallery.html" class="nav-pill-btn" title="3D Asset Gallery">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          3D Gallery
-        </a>
-        <button class="nav-pill-btn" id="themeToggle" title="Toggle Studio Dark / Light Mode">
-          <span id="themeIcon">🌓</span>
-          <span id="themeLabel">Studio Dark</span>
-        </button>
-      </div>
     </header>
 
     <!-- Hero Header -->
     <section class="hero-section">
       <div class="project-pill-badge">
         <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#0071e3; box-shadow:0 0 8px #0071e3;"></span>
-        Project KALPIT • iOS Spatial Computing • LiDAR &amp; RoomPlan • ShilpAI 3D
+        iOS Spatial Computing • LiDAR &amp; RoomPlan • Generative 3D Staging
       </div>
       <h1 class="hero-title">RoomPlanScanner: <span>Spatial LiDAR &amp; Generative 3D Studio</span></h1>
       <p class="hero-description">
-        An end-to-end spatial computing pipeline on iOS (SwiftUI + SceneKit + ARKit/RoomPlan) combining parametric LiDAR room mapping, zero-latency on-device Vision matching, cloud generative asset replacement via ShilpAI (TRELLIS + Hunyuan3D-2.1 PBR), and a zero-drift native Swift GLB serialization engine for Meta Quest VR staging.
+        An end-to-end spatial computing pipeline on iOS (SwiftUI + SceneKit + ARKit/RoomPlan) combining parametric LiDAR room mapping, zero-latency on-device Vision matching, cloud generative asset replacement (TRELLIS + Hunyuan3D-2.1 PBR), and a zero-drift native Swift GLB serialization engine for Meta Quest VR staging.
       </p>
 
       <div class="hero-stats-row">
@@ -811,7 +793,7 @@
           <strong>Native Swift glTF/GLB Serialization Engine (Phase 1):</strong> Constructed a zero-dependency binary `.glb` packer in native Swift that traverses SceneKit's `SCNScene` graph. Unlike standard USDZ converters that flatten hierarchies or cause scale drift, our engine maintains 1:1 metric scale mapping and enforces semantic node isolation (`<Category>_<Index>`, e.g., `Wall_1`, `Sofa_1`) so individual furniture items can be grasped and moved inside Meta Quest VR.
         </li>
         <li class="contribution-item">
-          <strong>Generative 3D Asset Replacement via ShilpAI (Phase 2):</strong> Built the "Magic Generate" client-server workflow connecting iOS to a Pegasus GPU server. Converts text descriptions or single photos into rich 3D geometries via <strong>TRELLIS</strong> and synthesizes physically-based rendering (PBR) roughness, metallic, and normal maps via <strong>Hunyuan3D-2.1</strong>.
+          <strong>Generative 3D Asset Replacement Pipeline (Phase 2):</strong> Built the "Magic Generate" client-server workflow connecting iOS to a Pegasus GPU server. Converts text descriptions or single photos into rich 3D geometries via <strong>TRELLIS</strong> and synthesizes physically-based rendering (PBR) roughness, metallic, and normal maps via <strong>Hunyuan3D-2.1</strong>.
         </li>
         <li class="contribution-item">
           <strong>Dynamic Bounding-Box Fitting &amp; Direct-Manipulation Gestures:</strong> Dynamically clears primitive bounding boxes, wraps USDZ models under a `"CustomModelRoot"` node, and computes uniform matrix scale factors to fit custom furniture snugly into RoomPlan's measured real-world dimensions. Integrated `UIPinchGestureRecognizer` for continuous scaling and `UIPanGestureRecognizer` for dragging models across the floor.
@@ -959,11 +941,11 @@
           </div>
           <div class="spec-item">
             <span class="spec-key">Synthesis Engine</span>
-            <span class="spec-val" id="specPipeline">ShilpAI (TRELLIS + Hunyuan3D-2.1)</span>
+            <span class="spec-val" id="specPipeline">Generative AI (TRELLIS + Hunyuan3D-2.1)</span>
           </div>
           <div class="spec-item">
             <span class="spec-key">Provenance</span>
-            <span class="spec-val">Project KALPIT &bull; CEVI Lab</span>
+            <span class="spec-val">Center for Visual Intelligence (CEVI)</span>
           </div>
         </div>
 
@@ -999,7 +981,7 @@
 
   <!-- JavaScript 3D Studio Engine -->
   <script>
-    // Sample Assets Generated via ShilpAI under Spatial Computing Research
+    // Generative 3D and Spatial Computing Assets
     const ASSETS_DATA = [
       {
         id: 'leather_sofa',
@@ -1010,8 +992,8 @@
         iosSrc: '../assets/models/roomplan/prompt_Leather_sofa.usdz',
         size: '1.25 MB',
         prompt: 'Leather sofa',
-        description: 'Synthesized via ShilpAI (TRELLIS + Hunyuan3D-2.1 PBR) from prompt "Leather sofa", auto-scaled to fit RoomPlan bounding box dimensions with custom roughness and normal maps.',
-        pipeline: 'ShilpAI Text-to-3D (TRELLIS + Hunyuan3D-2.1)',
+        description: 'Synthesized via generative AI (TRELLIS + Hunyuan3D-2.1 PBR) from prompt "Leather sofa", auto-scaled to fit RoomPlan bounding box dimensions with custom roughness and normal maps.',
+        pipeline: 'Text-to-3D (TRELLIS + Hunyuan3D-2.1)',
         tags: ['Text-to-3D', 'Leather', 'Sofa', 'PBR Metallic', 'Spatial Staging']
       },
       {
@@ -1023,8 +1005,8 @@
         iosSrc: '../assets/models/roomplan/prompt_Red_sofa.usdz',
         size: '1.22 MB',
         prompt: 'Red sofa',
-        description: 'Generative contemporary sofa generated via ShilpAI using text prompt "Red sofa". Exported with 1:1 metric scale bounds for direct SceneKit/Unity staging.',
-        pipeline: 'ShilpAI Text-to-3D (TRELLIS + Hunyuan3D-2.1)',
+        description: 'Generative contemporary sofa synthesized using text prompt "Red sofa". Exported with 1:1 metric scale bounds for direct SceneKit/Unity staging.',
+        pipeline: 'Text-to-3D (TRELLIS + Hunyuan3D-2.1)',
         tags: ['Text-to-3D', 'Red Sofa', 'Living Room', 'SceneKit']
       },
       {
@@ -1037,7 +1019,7 @@
         size: '1.59 MB',
         prompt: 'Round shaped table',
         description: 'Procedural wooden coffee table synthesized from prompt "Round shaped table", featuring realistic wood grain normal maps and baked PBR roughness.',
-        pipeline: 'ShilpAI Text-to-3D (TRELLIS + Hunyuan3D-2.1)',
+        pipeline: 'Text-to-3D (TRELLIS + Hunyuan3D-2.1)',
         tags: ['Text-to-3D', 'Table', 'Wood PBR', 'RoomPlan']
       },
       {
@@ -1049,8 +1031,8 @@
         iosSrc: '../assets/models/roomplan/prompt_Sofa_.usdz',
         size: '1.31 MB',
         prompt: 'Sofa',
-        description: 'Comfort lounge sofa synthesized via ShilpAI with uniform aspect-ratio scaling and direct touch gesture manipulation inside RoomPlanScanner.',
-        pipeline: 'ShilpAI Text-to-3D (TRELLIS + Hunyuan3D-2.1)',
+        description: 'Comfort lounge sofa synthesized with uniform aspect-ratio scaling and direct touch gesture manipulation inside RoomPlanScanner.',
+        pipeline: 'Text-to-3D (TRELLIS + Hunyuan3D-2.1)',
         tags: ['Text-to-3D', 'Sofa', 'Fabric PBR', 'Direct Manipulation']
       },
       {
@@ -1063,7 +1045,7 @@
         size: '0.98 MB',
         prompt: 'Wide red office cabinet',
         description: 'Storage cabinet synthesized from text prompt "Wide red office cabinet" with separated semantic drawer and body nodes for interactive VR grasping.',
-        pipeline: 'ShilpAI Text-to-3D (TRELLIS + Hunyuan3D-2.1)',
+        pipeline: 'Text-to-3D (TRELLIS + Hunyuan3D-2.1)',
         tags: ['Text-to-3D', 'Storage', 'Cabinet', 'VR Graspable']
       },
       {
@@ -1074,8 +1056,8 @@
         src: '../assets/models/roomplan/image_chair_23A466.glb',
         iosSrc: '../assets/models/roomplan/image_chair_23A466.usdz',
         size: '1.46 MB',
-        description: 'Generated via ShilpAI single-view image pipeline from a real camera crop captured by Algorithm R reservoir frame cache during LiDAR room scanning.',
-        pipeline: 'ShilpAI Single-View Image-to-3D (Crop-to-Mesh)',
+        description: 'Generated via single-view image pipeline from a real camera crop captured by Algorithm R reservoir frame cache during LiDAR room scanning.',
+        pipeline: 'Single-View Image-to-3D (Crop-to-Mesh)',
         tags: ['Image-to-3D', 'Single View', 'Algorithm R', 'Vision Cropper']
       },
       {
@@ -1087,7 +1069,7 @@
         iosSrc: '../assets/models/roomplan/image_chair_9C1104.usdz',
         size: '1.54 MB',
         description: 'Synthesized from a single camera frame back-projected from 3D object centroids using VNGenerateImageFeaturePrintRequest for instant on-device matching.',
-        pipeline: 'ShilpAI Single-View Image-to-3D (Crop-to-Mesh)',
+        pipeline: 'Single-View Image-to-3D (Crop-to-Mesh)',
         tags: ['Image-to-3D', 'Vision Print', 'Nordic Chair', 'Zero-Latency']
       },
       {
