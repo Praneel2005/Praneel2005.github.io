@@ -683,9 +683,17 @@
         Back to Portfolio
       </a>
       <div class="nav-actions">
-        <a href="https://github.com/Praneel2005" target="_blank" class="nav-pill-btn" title="GitHub Repository">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-          Code
+        <a href="kalpit.html" class="nav-pill-btn" title="Project KALPIT Suite">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          Project KALPIT
+        </a>
+        <a href="shilpai.html" class="nav-pill-btn" title="ShilpAI Generative Suite">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          ShilpAI
+        </a>
+        <a href="gallery.html" class="nav-pill-btn" title="3D Asset Gallery">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          3D Gallery
         </a>
         <button class="nav-pill-btn" id="themeToggle" title="Toggle Studio Dark / Light Mode">
           <span id="themeIcon">🌓</span>
@@ -698,7 +706,7 @@
     <section class="hero-section">
       <div class="project-pill-badge">
         <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:#0071e3; box-shadow:0 0 8px #0071e3;"></span>
-        iOS Spatial Computing • LiDAR &amp; RoomPlan • Generative 3D
+        Project KALPIT • iOS Spatial Computing • LiDAR &amp; RoomPlan • ShilpAI 3D
       </div>
       <h1 class="hero-title">RoomPlanScanner: <span>Spatial LiDAR &amp; Generative 3D Studio</span></h1>
       <p class="hero-description">
@@ -950,12 +958,12 @@
             <span class="spec-val" id="specPBR">PBR Metallic-Roughness</span>
           </div>
           <div class="spec-item">
-            <span class="spec-key">Reconstruction</span>
-            <span class="spec-val" id="specPipeline">RoomPlan LiDAR + Generative AI</span>
+            <span class="spec-key">Synthesis Engine</span>
+            <span class="spec-val" id="specPipeline">ShilpAI (TRELLIS + Hunyuan3D-2.1)</span>
           </div>
           <div class="spec-item">
             <span class="spec-key">Provenance</span>
-            <span class="spec-val">CEVI Spatial Computing Lab</span>
+            <span class="spec-val">Project KALPIT &bull; CEVI Lab</span>
           </div>
         </div>
 
@@ -1250,7 +1258,7 @@
       sidebarCategory.textContent = asset.categoryName.toUpperCase();
       sidebarTitle.textContent = asset.title;
       sidebarDescription.textContent = asset.description;
-      specFormat.textContent = 'GLB (glTF 2.0)';
+      specFormat.textContent = asset.iosSrc ? 'GLB (glTF 2.0) / USDZ' : 'GLB (glTF 2.0)';
       specSize.textContent = asset.size;
       specPipeline.textContent = asset.pipeline;
 
