@@ -767,16 +767,16 @@
     <section class="toolbar-section">
       <div class="category-filters" id="categoryFilters">
         <button class="filter-chip active" data-category="all">
-          All Assets <span class="chip-count" id="count-all">5</span>
+          All Assets <span class="chip-count" id="count-all">8</span>
+        </button>
+        <button class="filter-chip" data-category="prompt_generation">
+          Text Prompt to 3D <span class="chip-count" id="count-prompt">5</span>
+        </button>
+        <button class="filter-chip" data-category="image_generation">
+          Single-View Image to 3D <span class="chip-count" id="count-image">2</span>
         </button>
         <button class="filter-chip" data-category="rooms">
           Scanned Rooms (LiDAR) <span class="chip-count" id="count-rooms">1</span>
-        </button>
-        <button class="filter-chip" data-category="furniture">
-          Furniture &amp; Staging <span class="chip-count" id="count-furniture">2</span>
-        </button>
-        <button class="filter-chip" data-category="generative">
-          Generative AI Assets <span class="chip-count" id="count-generative">2</span>
         </button>
       </div>
 
@@ -991,62 +991,108 @@
 
   <!-- JavaScript 3D Studio Engine -->
   <script>
-    // Asset Catalog (Ready to link your real GLB models)
+    // Sample Assets Generated via ShilpAI under Spatial Computing Research
     const ASSETS_DATA = [
+      {
+        id: 'leather_sofa',
+        title: 'Leather Chesterfield Sofa',
+        category: 'prompt_generation',
+        categoryName: 'Text Prompt to 3D',
+        src: '../assets/models/roomplan/Leather_sofa.glb',
+        iosSrc: '../assets/models/roomplan/prompt_Leather_sofa.usdz',
+        size: '1.25 MB',
+        prompt: 'Leather sofa',
+        description: 'Synthesized via ShilpAI (TRELLIS + Hunyuan3D-2.1 PBR) from prompt "Leather sofa", auto-scaled to fit RoomPlan bounding box dimensions with custom roughness and normal maps.',
+        pipeline: 'ShilpAI Text-to-3D (TRELLIS + Hunyuan3D-2.1)',
+        tags: ['Text-to-3D', 'Leather', 'Sofa', 'PBR Metallic', 'Spatial Staging']
+      },
+      {
+        id: 'red_sofa',
+        title: 'Red Modern Sofa',
+        category: 'prompt_generation',
+        categoryName: 'Text Prompt to 3D',
+        src: '../assets/models/roomplan/Red_sofa.glb',
+        iosSrc: '../assets/models/roomplan/prompt_Red_sofa.usdz',
+        size: '1.22 MB',
+        prompt: 'Red sofa',
+        description: 'Generative contemporary sofa generated via ShilpAI using text prompt "Red sofa". Exported with 1:1 metric scale bounds for direct SceneKit/Unity staging.',
+        pipeline: 'ShilpAI Text-to-3D (TRELLIS + Hunyuan3D-2.1)',
+        tags: ['Text-to-3D', 'Red Sofa', 'Living Room', 'SceneKit']
+      },
+      {
+        id: 'round_table',
+        title: 'Round Shaped Table',
+        category: 'prompt_generation',
+        categoryName: 'Text Prompt to 3D',
+        src: '../assets/models/roomplan/Round_shaped_table.glb',
+        iosSrc: '../assets/models/roomplan/prompt_Round_shaped_table.usdz',
+        size: '1.59 MB',
+        prompt: 'Round shaped table',
+        description: 'Procedural wooden coffee table synthesized from prompt "Round shaped table", featuring realistic wood grain normal maps and baked PBR roughness.',
+        pipeline: 'ShilpAI Text-to-3D (TRELLIS + Hunyuan3D-2.1)',
+        tags: ['Text-to-3D', 'Table', 'Wood PBR', 'RoomPlan']
+      },
+      {
+        id: 'sofa_contemporary',
+        title: 'Contemporary Lounge Sofa',
+        category: 'prompt_generation',
+        categoryName: 'Text Prompt to 3D',
+        src: '../assets/models/roomplan/Sofa_.glb',
+        iosSrc: '../assets/models/roomplan/prompt_Sofa_.usdz',
+        size: '1.31 MB',
+        prompt: 'Sofa',
+        description: 'Comfort lounge sofa synthesized via ShilpAI with uniform aspect-ratio scaling and direct touch gesture manipulation inside RoomPlanScanner.',
+        pipeline: 'ShilpAI Text-to-3D (TRELLIS + Hunyuan3D-2.1)',
+        tags: ['Text-to-3D', 'Sofa', 'Fabric PBR', 'Direct Manipulation']
+      },
+      {
+        id: 'red_office_cabinet',
+        title: 'Wide Red Office Cabinet',
+        category: 'prompt_generation',
+        categoryName: 'Text Prompt to 3D',
+        src: '../assets/models/roomplan/Wide_red_office_cabinet.glb',
+        iosSrc: '../assets/models/roomplan/prompt_Wide_red_office_cabinet.usdz',
+        size: '0.98 MB',
+        prompt: 'Wide red office cabinet',
+        description: 'Storage cabinet synthesized from text prompt "Wide red office cabinet" with separated semantic drawer and body nodes for interactive VR grasping.',
+        pipeline: 'ShilpAI Text-to-3D (TRELLIS + Hunyuan3D-2.1)',
+        tags: ['Text-to-3D', 'Storage', 'Cabinet', 'VR Graspable']
+      },
+      {
+        id: 'chair_image_sample_1',
+        title: 'Accent Armchair (Crop #23A466)',
+        category: 'image_generation',
+        categoryName: 'Single-View Image to 3D',
+        src: '../assets/models/roomplan/image_chair_23A466.glb',
+        iosSrc: '../assets/models/roomplan/image_chair_23A466.usdz',
+        size: '1.46 MB',
+        description: 'Generated via ShilpAI single-view image pipeline from a real camera crop captured by Algorithm R reservoir frame cache during LiDAR room scanning.',
+        pipeline: 'ShilpAI Single-View Image-to-3D (Crop-to-Mesh)',
+        tags: ['Image-to-3D', 'Single View', 'Algorithm R', 'Vision Cropper']
+      },
+      {
+        id: 'chair_image_sample_2',
+        title: 'Nordic Dining Chair (Crop #9C1104)',
+        category: 'image_generation',
+        categoryName: 'Single-View Image to 3D',
+        src: '../assets/models/roomplan/image_chair_9C1104.glb',
+        iosSrc: '../assets/models/roomplan/image_chair_9C1104.usdz',
+        size: '1.54 MB',
+        description: 'Synthesized from a single camera frame back-projected from 3D object centroids using VNGenerateImageFeaturePrintRequest for instant on-device matching.',
+        pipeline: 'ShilpAI Single-View Image-to-3D (Crop-to-Mesh)',
+        tags: ['Image-to-3D', 'Vision Print', 'Nordic Chair', 'Zero-Latency']
+      },
       {
         id: 'scanned_room_xr1',
         title: 'Parametric Scanned Room (Xr1.glb)',
         category: 'rooms',
         categoryName: 'Scanned Room (LiDAR)',
         src: '../assets/models/Xr1.glb',
+        iosSrc: '',
         size: '4.3 MB',
         description: 'Full real-world room captured with iPhone LiDAR and exported via our native Swift GLBExporter engine. Features separated wall, door, and furniture nodes with 1:1 metric scale.',
         pipeline: 'Apple RoomPlan LiDAR + Native Swift GLBExporter',
         tags: ['RoomPlan', 'LiDAR', 'glTF 2.0', 'Meta Quest VR']
-      },
-      {
-        id: 'sofa_chesterfield',
-        title: 'Generative Leather Chesterfield Sofa',
-        category: 'furniture',
-        categoryName: 'Furniture & Staging',
-        src: '../assets/models/earrings/jhumka_2.glb', // Ready for your room/furniture .glb file!
-        size: '2.4 MB',
-        description: 'Synthesized via ShilpAI (TRELLIS + Hunyuan3D-2.1 PBR), auto-scaled to fit RoomPlan bounding box dimensions with custom roughness and normal maps.',
-        pipeline: 'ShilpAI Generative AI + RoomPlan Bounding-Box Fitting',
-        tags: ['PBR', 'Leather', 'TRELLIS', 'Sofa']
-      },
-      {
-        id: 'chair_wood',
-        title: 'Heritage Armchair Asset',
-        category: 'furniture',
-        categoryName: 'Furniture & Staging',
-        src: '../assets/models/earrings/jhumka_4.glb',
-        size: '1.8 MB',
-        description: 'On-device vision-matched chair model, cropped from camera frames and auto-swapped using Algorithm R reservoir sampling.',
-        pipeline: 'Vision VNFeaturePrint Instant Match',
-        tags: ['Vision Match', 'Algorithm R', 'Chair', 'PBR']
-      },
-      {
-        id: 'room_floorplan_mesh',
-        title: 'Parametric Room Capture (GLB)',
-        category: 'generative',
-        categoryName: 'Scanned Architecture',
-        src: '../assets/models/swords/ancient_dagger_ggl_3.glb',
-        size: '3.1 MB',
-        description: 'Native Swift GLB export featuring separated wall, door, and furniture nodes with procedural parquet floor textures and soft lighting.',
-        pipeline: 'Native Swift GLBExporter (1:1 Metric Scale)',
-        tags: ['RoomPlan', 'glTF 2.0', 'Unity Ready', 'Meta Quest']
-      },
-      {
-        id: 'custom_table_asset',
-        title: 'Modern Dining Table',
-        category: 'generative',
-        categoryName: 'Furniture & Staging',
-        src: '../assets/models/swords/dagger_ggl_1.glb',
-        size: '1.2 MB',
-        description: 'Procedural mahogany PBR shader with uniform aspect-ratio preservation and direct-manipulation pinch-to-scale controls.',
-        pipeline: 'RoomStyleHelper PBR Category Shader',
-        tags: ['Mahogany', 'PBR', 'Pinch-Scale']
       }
     ];
 
@@ -1098,6 +1144,7 @@
 
       modelsGrid.innerHTML = filteredAssets.map((asset, index) => {
         const globalIndex = ASSETS_DATA.findIndex(a => a.id === asset.id);
+        const iosSrcAttr = asset.iosSrc ? `ios-src="${asset.iosSrc}"` : '';
         return `
           <article class="model-card">
             <div class="card-canvas-wrapper">
@@ -1108,6 +1155,7 @@
               <model-viewer
                 id="mv-${asset.id}"
                 src="${asset.src}"
+                ${iosSrcAttr}
                 alt="${asset.title}"
                 loading="lazy"
                 reveal="auto"
@@ -1207,6 +1255,11 @@
       specPipeline.textContent = asset.pipeline;
 
       studioViewer.src = asset.src;
+      if (asset.iosSrc) {
+        studioViewer.setAttribute('ios-src', asset.iosSrc);
+      } else {
+        studioViewer.removeAttribute('ios-src');
+      }
       studioViewer.alt = asset.title;
       studioModal.classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -1216,6 +1269,7 @@
       studioModal.classList.remove('open');
       document.body.style.overflow = '';
       studioViewer.src = '';
+      studioViewer.removeAttribute('ios-src');
     }
 
     closeStudioBtn.addEventListener('click', closeStudio);
